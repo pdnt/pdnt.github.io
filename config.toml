@@ -47,9 +47,6 @@ copyright = "&copy; Copyright 2023, Dip Pablo"
     fa_icon = "fab fa-linkedin-in fa-1x"
     href = "https://www.linkedin.com/in/pablo-dip-24b33b1b0/"
   [[params.social]]
-    fa_icon = "fab fa-twitter fa-1x"
-    href = ""
-  [[params.social]]
     fa_icon = "fas fa-at fa-1x"
-    href = ""
+    href = "pablodip@protonmail.com"
 
