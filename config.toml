@@ -45,7 +45,7 @@ copyright = "&copy; Copyright 2023, Dip Pablo"
     href = "http://github.com/pdnt"      # Link to associate with icon (http://, https://, mailto:)
   [[params.social]]
     fa_icon = "fab fa-linkedin-in fa-1x"
-    href = ""
+    href = "https://www.linkedin.com/in/pablo-dip-24b33b1b0/"
   [[params.social]]
     fa_icon = "fab fa-twitter fa-1x"
     href = ""
