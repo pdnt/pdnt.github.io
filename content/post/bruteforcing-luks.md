@@ -71,7 +71,10 @@ To bruteforce the header we can use a tool like bruteforce-luks.
 bruteforce-luks -t 8 -v 60 -f dictionary.txt /dev/sdd1
 ```
 -t CPU threads to be used
+
 -v Print progress information every x seconds
+
 -f  path to the diccionary
+
 /dev/sdxx path to the encrypted drive partition
 
