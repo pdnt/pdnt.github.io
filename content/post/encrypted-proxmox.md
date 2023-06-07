@@ -101,14 +101,14 @@ It is recommended to only install the "standard system utilities" and "SSH serve
 ### Configure Networking
 
 To use proxmox, we must set a static ip and the hostname must be mapped to the IP address in the host file.
-Set the static IP address by changing "dhcp" to "static" in ```/etc/network/interfaces```
+Set the static IP address by changing "dhcp" to "static" in ```/etc/network/interfaces``` and add the IP address, netmask, and gateway for the server.
+
 {{< highlight bash >}}
 nano /etc/network/interfaces
 {{< /highlight >}}
-![interfaces](/net1.png)
 
-And add the IP address, netmask, and gateway for the server
 ![config](/confignovmbr0.png)
+
 
 Create a Linux Bridge called ```vmbr0```, and add your first network interface to it. If you have trouble configuring the Bridge, you can use the GUI to do so once proxmox packages are installed.
 ![vmbr0](/configVMBR0.png)
