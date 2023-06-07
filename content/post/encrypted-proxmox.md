@@ -4,7 +4,7 @@ date: 2023-06-06T16:46:34-03:00
 categories: [ "Cryptography", "Cybersecurity", "DevOps"]
 ---
 
-Although Proxmox VE is a Debian-based Linux distribution, its installer kldasfdoesn't offer us the possibility of setting up an encrypted LVM.
+Although Proxmox VE is a Debian-based Linux distribution, its installer doesn't offer us the possibility of setting up an encrypted LVM.
 To install proxmox over an encrypted drive we need to install Debian 11 first, change the network configuration, and then install the proxmox packages.
 
 
