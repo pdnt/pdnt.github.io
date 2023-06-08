@@ -109,7 +109,7 @@ nano /etc/network/interfaces
 
 ![config](/confignovmbr0.png)
 
-A vmbr interface is needed to connect guests to the underlying physical network. They are a Linux bridge that can be thought of as a virtual switch to which the guests and physical interfac>
+A vmbr interface is needed to connect guests to the underlying physical network. They are a Linux bridge that can be thought of as a virtual switch to which the guests and physical interfaces are connected to.
 
 Create a Linux Bridge called ```vmbr0```, and add your first network interface to it. If you have trouble configuring the Bridge, you can use the GUI to do so once proxmox packages are installed.
 ![vmbr0](/configVMBR0.png)
