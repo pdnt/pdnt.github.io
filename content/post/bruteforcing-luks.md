@@ -38,9 +38,9 @@ Supplying the user password unlocks the decryption for the key material, which s
 Although you don't need to have a backup of your LUKS header to brute force your disk, I highly recommend that you create one while you still have access to the drive. If the header of a LUKS volume gets corrupted, you won't be able to access or decrypt your data unless you have a backup of your header. Keep in mind that you cannot backup the header of an encrypted LUKS drive without the passphrase because the contents of the header are encrypted using the passphrase and cannot be accessed without it. If you don't have a backup of your header, create one now! 
 You can use cryptsetup to make a backup of your LUKS header:
 
-```
+{{< highlight bash >}}
 sudo cryptsetup luksHeaderBackup /dev/sdb1 --header-backup-file luks_backup_sdb1
-```
+{{< /highlight >}}
 
 
 ### Bruteforcing a LUKS1 header
@@ -67,14 +67,16 @@ passwordGenerator()
 {{< /highlight >}}
 
 To bruteforce the header we can use a tool like bruteforce-luks.
-```
+
+{{< highlight bash >}}
 bruteforce-luks -t 8 -v 60 -f dictionary.txt /dev/sdd1
-```
--t CPU threads to be used
+{{< /highlight >}}
 
--v Print progress information every x seconds
+**-t** CPU threads to be used
 
--f  path to the diccionary
+**-v** Print progress information every x seconds
 
-/dev/sdxx path to the encrypted drive partition
+**-f**  path to the diccionary
+
+**/dev/sdxx** path to the encrypted drive partition
 
