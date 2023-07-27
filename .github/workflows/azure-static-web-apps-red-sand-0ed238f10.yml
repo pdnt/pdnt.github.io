@@ -32,6 +32,25 @@ jobs:
           output_location: "public" # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
 
+      - name: Increment Deployment Counter
+        run: |
+          # Fetch current counter value from the file
+          counter=$(cat deployment_counter.txt)
+          
+          # Increment the counter
+          counter=$((counter+1))
+          
+          # Write the updated counter value back to the file
+          echo "$counter" > deployment_counter.txt
+
+          # Commit the changes back to the repository
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
+          git add deployment_counter.txt
+          git commit -m "Increment deployment counter [skip ci]"
+          git push origin main  # Assuming your default branch is "main"
+
+
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
     runs-on: ubuntu-latest
