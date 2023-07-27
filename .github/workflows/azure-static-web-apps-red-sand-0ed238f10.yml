@@ -33,6 +33,8 @@ jobs:
           ###### End of Repository/Build Configurations ######
 
       - name: Increment Deployment Counter
+        env:
+          ACTIONSCOUNTER_TOKEN: ${{ secrets.ACTIONSCOUNTER_TOKEN }}
         run: |
           # Fetch current counter value from the file
           counter=$(cat deployment_counter.txt)
@@ -50,7 +52,7 @@ jobs:
           git commit -m "Increment deployment counter [skip ci]"
           git push origin main  # Assuming your default branch is "main"
 
-
+      
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
     runs-on: ubuntu-latest
