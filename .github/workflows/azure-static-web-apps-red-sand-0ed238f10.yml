@@ -34,11 +34,7 @@ jobs:
           output_location: "public" # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
 
-
       - name: Increment Deployment Counter
-        permissions:
-          contents: write  # To push a branch 
-          pull-requests: write  # To create a PR from that branch
         env:
           ACTIONSCOUNTER_TOKEN: ${{ secrets.ACTIONSCOUNTER_TOKEN }}
         run: |
