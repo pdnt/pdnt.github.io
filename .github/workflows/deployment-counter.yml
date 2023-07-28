@@ -28,6 +28,8 @@ jobs:
           echo "::set-output name=counter_value::$new_counter"
 
       - name: Show Updated Counter Value
+        env:
+          ACTIONSCOUNTER_TOKEN: ${{ secrets.ACTIONSCOUNTER_TOKEN }}
         if: success()
         run: |
           # Get the updated counter value from the previous step's output
