@@ -1,7 +1,7 @@
 ---
 title: "Bruteforcing a fully encrypted LVM drive"
 date: 2023-06-04T16:16:39-03:00
-categories: [ "Cryptography", "Cybersecurity", "Infosec", "Bruteforcing", "posts"]
+categories: [ "Cryptography", "Cybersecurity", "Infosec", "Bruteforcing"]
 ---
 
 One of the most crucial lessons that security professionals and enthusiasts must grasp is that security policies should be tailored to a business's needs, and realistic goals should be set for their implementation. 
