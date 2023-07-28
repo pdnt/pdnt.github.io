@@ -22,6 +22,6 @@ jobs:
       - name: Update resources
         uses: test-room-7/action-update-file@v1
         with:
-            file-path: ./counter/deployment_counter.txt
+            file-path: counter/deployment_counter.txt
             commit-msg: Update counter
             github-token: ${{ secrets.ACTIONSCOUNTER_TOKEN }}
