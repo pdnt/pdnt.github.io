@@ -2,11 +2,11 @@ name: Azure Static Web Apps CI/CD
 
 on:
   push:
-    paths-ignore: counter
+    paths-ignore: counter/
     branches:
       - main
   pull_request:
-    paths-ignore: counter
+    paths-ignore: counter/
     types: [opened, synchronize, reopened, closed]
     branches:
       - main
