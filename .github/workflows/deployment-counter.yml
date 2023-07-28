@@ -2,8 +2,7 @@ name: Update Deployment Counter
 
 on:
   workflow_run:
-    workflows:
-      - build_and_deploy_job
+    workflows: [Build And Deploy]
     types:
       - completed
 
