@@ -17,21 +17,11 @@ jobs:
 
       - name: Increment Counter
         id: increment_counter
-        run: |
-          # Load the current counter value from the file
-          counter=$(cat deployment_counter.txt)
-          # Increment the counter by 1
-          new_counter=$((counter + 1))
-          # Update the counter value in the file
-          echo "$new_counter" > deployment_counter.txt
-          # Store the new counter value as an output
-          echo "::set-output name=counter_value::$new_counter"
+        run: ./scripts/counter.sh
 
-      - name: Show Updated Counter Value
-        env:
-          ACTIONSCOUNTER_TOKEN: ${{ secrets.ACTIONSCOUNTER_TOKEN }}
-        if: success()
-        run: |
-          # Get the updated counter value from the previous step's output
-          counter_value=${{ steps.increment_counter.outputs.counter_value }}
-          echo "Successfully deployed! Current deployment count: $counter_value"
+      - name: Update resources
+        uses: test-room-7/action-update-file@v1
+        with:
+            file-path: ./deployment_counter.txt
+            commit-msg: Update counter
+            github-token: ${{ secrets.ACTIONSCOUNTER_TOKEN }}
