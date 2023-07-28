@@ -9,6 +9,23 @@ on:
     branches:
       - main
 
+  workflow_dispatch:
+    inputs: 
+      Update Deployment Counter:
+        description: 'Trigger for the deployment counter'
+        required: true
+        default: 'Counter'
+      
+      counter_github_account:
+        description: 'GitHub Account Owner'
+        required: true
+        default: 'pdnt'
+      
+      counter_repo_github:
+        description: 'GitHub Repository Name'
+        required: true
+        default: 'pdnt.github.io'
+
 jobs:
   build_and_deploy_job:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
