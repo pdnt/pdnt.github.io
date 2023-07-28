@@ -17,11 +17,11 @@ jobs:
 
       - name: Increment Counter
         id: increment_counter
-        run: ./scripts/counter.sh
+        run: ./counter.sh
 
       - name: Update resources
         uses: test-room-7/action-update-file@v1
         with:
-            file-path: ./counter/deployment_counter.txt
+            file-path: ./scripts/counter.sh
             commit-msg: Update counter
             github-token: ${{ secrets.ACTIONSCOUNTER_TOKEN }}
