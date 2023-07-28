@@ -2,7 +2,7 @@ name: Update Deployment Counter
 
 on:
   workflow_run:
-    workflows: [Build And Deploy]
+    workflows: [Azure Static Web Apps CI/CD]
     branches: [main]
     types:
       - completed
