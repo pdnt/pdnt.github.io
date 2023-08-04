@@ -1,7 +1,7 @@
 ---
 title: "Integrating a deployment counter to your CI/CD pipeline"
 date: 2023-06-04T16:16:39-03:00
-categories: [ "CI/CD", "DevOps"]
+categories: [ "CI/CD", "DevOps", "Azure"]
 ---
 
 I was reading a blog by Chad Carlson about [Measuring Deployment Success with GitHub Actions](https://platform.sh/blog/measuring-the-success-of-a-deployment-with-githubactions/) and I noticed a stylish deployment counter featured at the bottom of their website, highlighting their platform's successful deployments. While a PaaS provider like [platform.sh](https://platform.sh) will have many more deployments than my personal website, i feelt inspired to create a similar counter and integrate it into my CI/CD pipeline.
