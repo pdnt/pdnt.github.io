@@ -1,6 +1,6 @@
 ---
 title: "Integrating a deployment counter to your CI/CD pipeline"
-date: 2023-06-04T16:16:39-03:00
+date: 2023-08-03T16:16:39-03:00
 categories: [ "CI/CD", "DevOps", "Azure"]
 ---
 
