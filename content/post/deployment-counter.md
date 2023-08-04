@@ -142,6 +142,6 @@ on:
 
 Here I used the `paths-ignore` filter to specify a path that will be ignored by the workflow. Meaning that any changes made to `deployment_counter.txt` will not be considered an event and therefore the workflow will not be triggered.
 
-&nbsp;
-
 You can see the counter implemented on [my home page](https://pablodip.me/)
+
+&nbsp; 
