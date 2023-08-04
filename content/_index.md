@@ -7,6 +7,11 @@ draft: false
 
 Hello :wave: I'm Pablo Dip. I live in Tucuman, Argentina
 
+I'm a dedicated professional in the tech industry. I began my career as a technician in a computer store, where I cultivated a profound understanding of hardware and software components.
+
+I established my own business, focusing on selling enterprise networking equipment and providing reliable networking solutions. Client satisfaction has always been my priority, and I take pride in tailoring solutions to meet individual needs.
+
+My journey is characterized by continuous growth and a commitment to staying updated with the latest trends in the tech world. I firmly believe in sharing knowledge and empowering others, which is why I have volunteered for several years to security conferences such as [Wild West Hacking Fest](https://wildwesthackinfest.com/) (from [Black Hills Information Security](https://www.blackhillsinfosec.com/)) and [CactusCon](https://www.cactuscon.com/).
 
 ### Contact
 
