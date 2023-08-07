@@ -14,4 +14,3 @@ jobs:
           enabled-static-website: 'true'
           folder: './public'
           connection-string: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
-          storage-account-name: 'testwebsiteuscentral'
