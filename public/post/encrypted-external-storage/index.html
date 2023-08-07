@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en-us"><head>
+    <title>Pablo Dip</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="" />
+
+    
+    
+    
+    <link rel="stylesheet" href="../../css/theme.min.css">
+
+    
+    
+    
+
+    
+</head>
+<body>
+        <div id="content" class="mx-auto"><header class="container mt-sm-5 mt-4 mb-4 mt-xs-1">
+    <div class="row">
+        
+        <div class="col-sm-4 col-12 text-sm-right text-center pt-sm-4">
+            <a href="../../" class="text-decoration-none">
+                <img id="home-image" class="rounded-circle"
+                    
+                        
+                            src="../../avatar.jpg"
+                        
+                    
+                />
+            </a>
+        </div>
+        <div class="col-sm-8 col-12 text-sm-left text-center">
+        
+            <h2 class="m-0 mb-2 mt-4">
+                <a href="../../" class="text-decoration-none">
+                    
+                        Pablo Dip
+                    
+                </a>
+            </h2>
+            <p class="text-muted mb-1">
+                
+                    DevOps and security enthusiast | Argentina
+                
+            </p>
+            <ul id="nav-links" class="list-inline mb-2">
+                
+                
+                    <li class="list-inline-item">
+                        <a class="badge badge-white " href="../../" title="About">About</a>
+                    </li>
+                
+                    <li class="list-inline-item">
+                        <a class="badge badge-white " href="../../post/" title="Posts">Posts</a>
+                    </li>
+                
+                    <li class="list-inline-item">
+                        <a class="badge badge-white " href="../../categories/" title="Categories">Categories</a>
+                    </li>
+                
+            </ul>
+            <ul id="nav-social" class="list-inline">
+                
+                    <li class="list-inline-item mr-3">
+                        <a href="http://github.com/pdnt" target="_blank">
+                            <i class="fab fa-github fa-1x text-muted"></i>
+                        </a>
+                    </li>
+                
+                    <li class="list-inline-item mr-3">
+                        <a href="https://www.linkedin.com/in/pablo-dip-24b33b1b0/" target="_blank">
+                            <i class="fab fa-linkedin-in fa-1x text-muted"></i>
+                        </a>
+                    </li>
+                
+                    <li class="list-inline-item mr-3">
+                        <a href="mailto:pablodip@protonmail.com" target="_blank">
+                            <i class="fas fa-at fa-1x text-muted"></i>
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+    <hr />
+</header>
+<div class="container">
+    <div class="pl-sm-2">
+        <div class="mb-3">
+            <h3 class="mb-0">Encrypting External Storage for Enhanced Security</h3>
+            
+            <small class="text-muted">Published July 6, 2023</small>
+        </div>
+
+        <article>
+            <p>Protecting sensitive information from unauthorized access and potential breaches is crucial, especially when it comes to external storage devices like USB drives, which are susceptible to loss or theft.</p>
+<p>After <a href="https://pablodip.me/post/encrypted-proxmox">setting up an encrypted Proxmox instance on my server</a>, I needed to protect my external storage. It wouldnt be very usefull to run my hypervisor over an encrypted LVM volume if I store all my backups and data on a open HDD.</p>
+<p>Today I will show you the very simple process of encrypting a drive to ensure the confidentiality and integrity of your data.</p>
+<p>To begin, let&rsquo;s find the drive we want to encrypt
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">lsblk</code></pre></div></p>
+<pre><code>NAME                  MAJ:MIN RM   SIZE RO TYPE  MOUNTPOINT
+sda                     8:0    0   1.8T  0 disk
+└─sda1                  8:1    0   1.8T  0 part
+sdb                     8:16   0 232.9G  0 disk
+├─sdb1                  8:17   0   512M  0 part  /boot/efi
+├─sdb2                  8:18   0   732M  0 part  /boot
+└─sdb3                  8:19   0 231.7G  0 part
+  └─sda3_crypt        254:0    0 231.7G  0 crypt
+    └─parrot--vg-root 254:1    0 231.6G  0 lvm  
+sdc                     8:32   0   9.1T  0 disk
+└─sdc1                  8:33   0   9.1T  0 part
+sdd                     8:48   0 931.5G  0 disk
+└─sdd1                  8:49   0 931.5G  0 part
+</code></pre><p>For this example, let&rsquo;s assume we will use <code>sdd</code>.
+Before encrypting the drive, I highly recommend performing a secure erase to overwrite the entire disk with random data. This step helps protect against potential file recovery.
+Ensure you have identified the correct drive on the previous step, as the following command will delete all of its contents.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo dd <span style="color:#66d9ef">if</span><span style="color:#f92672">=</span>/dev/zero of<span style="color:#f92672">=</span>/dev/sdd count<span style="color:#f92672">=</span><span style="color:#ae81ff">4096</span></code></pre></div>
+<h3 id="encrypt-the-device">Encrypt the Device</h3>
+<p>The command <code>cryptsetup</code> is ussed to setup cryptographic volumes and the subcommand <code>luksFormat</code> initializes a LUKS partition and sets the initial key.
+The example below uses these commands to encrypt the <code>/dev/sdd</code> partition. Keep in mind that by executing this command you will lose all data on the partition that you are encrypting.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo cryptsetup luksFormat /dev/sdd</code></pre></div>
+<p>You will be prompted with a warning message. Type &ldquo;YES&rdquo; in uppercase to confirm and proceed. Then, enter and verify your passphrase.</p>
+<pre><code>WARNING!
+========
+This will overwrite data on /dev/sdd irrevocably.
+
+Are you sure? (Type uppercase yes): YES
+Enter passphrase: 
+Verify passphrase:
+</code></pre><p>Create a logical device-mapper device, mounted to the LUKS-encrypted partition. In the example below, encryptedDrive is the given name of the mapping name for the opened LUKS partition.
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo cryptsetup open /dev/sdd encryptedDrive</code></pre></div></p>
+<p>LUKS volumes are opened in <code>/dev/mapper</code>. We can see that our encrypted drive is listed:
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ls /dev/mapper</code></pre></div></p>
+<pre><code>control parrot--vg-root sda3_crypt encryptedDrive
+</code></pre><p>Now, let&rsquo;s format the encrypted partition with the ext4 filesystem and assign the label encryptedDrive to it.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo mkfs.ext4 -L encryptedDrive /dev/mapper/encryptedDrive</code></pre></div>
+<p>Finally, we can mount the encrypted drive to directory. I will mount it to <code>/mnt/vaultDrive</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo mount /dev/mapper/encryptedDrive /mnt/vaultDrive</code></pre></div>
+
+        </article>
+    </div>
+
+    
+
+            </div>
+        </div><footer class="text-center pb-1">
+    <small class="text-muted">
+        
+            &copy; Copyright 2023, Dip Pablo
+        
+        <br>
+        Powered by <a href="https://gohugo.io/" target="_blank">Hugo</a>
+        and <a href="https://github.com/austingebauer/devise" target="_blank">Devise</a>
+    </small>
+</footer>
+</body>
+</html>

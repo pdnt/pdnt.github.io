@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en-us"><head>
+    <title>Pablo Dip</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="" />
+
+    
+    
+    
+    <link rel="stylesheet" href="../../css/theme.min.css">
+
+    
+    
+    
+
+    
+</head>
+<body>
+        <div id="content" class="mx-auto"><header class="container mt-sm-5 mt-4 mb-4 mt-xs-1">
+    <div class="row">
+        
+        <div class="col-sm-4 col-12 text-sm-right text-center pt-sm-4">
+            <a href="../../" class="text-decoration-none">
+                <img id="home-image" class="rounded-circle"
+                    
+                        
+                            src="../../avatar.jpg"
+                        
+                    
+                />
+            </a>
+        </div>
+        <div class="col-sm-8 col-12 text-sm-left text-center">
+        
+            <h2 class="m-0 mb-2 mt-4">
+                <a href="../../" class="text-decoration-none">
+                    
+                        Pablo Dip
+                    
+                </a>
+            </h2>
+            <p class="text-muted mb-1">
+                
+                    DevOps and security enthusiast | Argentina
+                
+            </p>
+            <ul id="nav-links" class="list-inline mb-2">
+                
+                
+                    <li class="list-inline-item">
+                        <a class="badge badge-white " href="../../" title="About">About</a>
+                    </li>
+                
+                    <li class="list-inline-item">
+                        <a class="badge badge-white " href="../../post/" title="Posts">Posts</a>
+                    </li>
+                
+                    <li class="list-inline-item">
+                        <a class="badge badge-white " href="../../categories/" title="Categories">Categories</a>
+                    </li>
+                
+            </ul>
+            <ul id="nav-social" class="list-inline">
+                
+                    <li class="list-inline-item mr-3">
+                        <a href="http://github.com/pdnt" target="_blank">
+                            <i class="fab fa-github fa-1x text-muted"></i>
+                        </a>
+                    </li>
+                
+                    <li class="list-inline-item mr-3">
+                        <a href="https://www.linkedin.com/in/pablo-dip-24b33b1b0/" target="_blank">
+                            <i class="fab fa-linkedin-in fa-1x text-muted"></i>
+                        </a>
+                    </li>
+                
+                    <li class="list-inline-item mr-3">
+                        <a href="mailto:pablodip@protonmail.com" target="_blank">
+                            <i class="fas fa-at fa-1x text-muted"></i>
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+    <hr />
+</header>
+<div class="container">
+    <div class="pl-sm-2">
+        <div class="mb-3">
+            <h3 class="mb-0">Bruteforcing a fully encrypted LVM drive</h3>
+            
+            <small class="text-muted">Published June 4, 2023</small>
+        </div>
+
+        <article>
+            <p>One of the most crucial lessons that security professionals and enthusiasts must grasp is that security policies should be tailored to a business&rsquo;s needs, and realistic goals should be set for their implementation.
+I learned this lesson many years ago by forgetting the last 4 chars of my 45-character-long password.</p>
+<p>Back in 2014, &ldquo;No Place to Hide&rdquo; by Glenn Greenwald had just come out, and the side effect of reading it in a couple of days is a bit of paranoia. That&rsquo;s when I decided to start fully encrypting my drives using LUKS.
+I used GRC&rsquo;s &ldquo;Perfect Passwords&rdquo; to generate my password, and after memorizing it I destroyed every copy I had of it.
+A few months later my PSU suddenly broke down. Unfortunately, the shop took 1 month to honor the warranty, and when I tried decrypting my disk I was uncertain about four different characters.</p>
+<p>For this occasion, I would use a random password that I just generated:</p>
+<blockquote>
+<p>.BbV.$D]8ftauy~$(OgA&lt;BM63!ft@O46hj8yJ.9{en<strong>s%F</strong></p>
+</blockquote>
+<p>Using upper and lower case letters, numbers, and special characters, I had 830584 possible combinations.</p>
+<h3 id="luks1-overview">LUKS1 overview</h3>
+<p>LUKS (Linux Unified Key Setup) is a specification for block device encryption. It establishes an on-disk format for the data, as well as a passphrase/key management policy.
+There is an unencrypted header at the beginning of an encrypted volume, which allows up to 8 (LUKS1) or 32 (LUKS2) encryption keys to be stored along with encryption parameters such as cipher type and key size.</p>
+<p>The basic on-disk structure of a LUKS1 header is depicted below:</p>
+<p><img src="../../disklayout.jpg" alt="luks1 header"></p>
+<p>A LUKS1 partition is composed of the partition header (phdr), followed by key material and then the bulk data.</p>
+<p><strong>The header (phdr):</strong> Contains information about the cipher, cipher mode, key length, hash function, master key checksum, salt, and iteration counts.</p>
+<p><strong>Key Material:</strong> Where an encrypted copy of the master key is stored.</p>
+<p>The password you create when encrypting a volume it&rsquo;s not used to encrypt the bulk data itself but rather to lock an encrypted copy of the master key.
+Supplying the user password unlocks the decryption for the key material, which stores the master key. The master key in turn unlocks the bulk data</p>
+<p>Although you don&rsquo;t need to have a backup of your LUKS header to brute force your disk, I highly recommend that you create one while you still have access to the drive. If the header of a LUKS volume gets corrupted, you won&rsquo;t be able to access or decrypt your data unless you have a backup of your header. Keep in mind that you cannot backup the header of an encrypted LUKS drive without the passphrase because the contents of the header are encrypted using the passphrase and cannot be accessed without it. If you don&rsquo;t have a backup of your header, create one now!
+You can use cryptsetup to make a backup of your LUKS header:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo cryptsetup luksHeaderBackup /dev/sdb1 --header-backup-file luks_backup_sdb1</code></pre></div>
+<h3 id="bruteforcing-a-luks1-header">Bruteforcing a LUKS1 header</h3>
+<p>To access the bulk data we need the master key, and to recover it the user must supply a password. Then the password is processed for every active key slot. The recovery is successful when a master key candidate correctly checksums against the master key checksum stored in the phdr.</p>
+<p>First, I wrote a simple Python script to create a dictionary with all of the possible combinations.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python3" data-lang="python3"><span style="color:#f92672">import</span> itertools
+<span style="color:#f92672">import</span> string
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">passwordGenerator</span>():
+    characters <span style="color:#f92672">=</span> string<span style="color:#f92672">.</span>ascii_letters <span style="color:#f92672">+</span> string<span style="color:#f92672">.</span>digits <span style="color:#f92672">+</span> string<span style="color:#f92672">.</span>punctuation
+    incompletePassword <span style="color:#f92672">=</span> <span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;.BbV.$D]8ftauy~$(OgA&lt;BM63!ft@O46hj8yJ.9{en&#34;</span> <span style="color:#75715e">#Create a raw string so we can include the backslash character (\) as a literal character</span>
+
+    <span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#34;dictionary.txt&#34;</span>, <span style="color:#e6db74">&#34;w&#34;</span>) <span style="color:#66d9ef">as</span> dictionaryFile:
+        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> itertools<span style="color:#f92672">.</span>product(characters, repeat<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>):
+            combination <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span><span style="color:#f92672">.</span>join(i) <span style="color:#75715e">#Convert the output of itertools to a string</span>
+            dictionaryFile<span style="color:#f92672">.</span>write(incompletePassword <span style="color:#f92672">+</span> combination <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>)
+
+passwordGenerator()</code></pre></div>
+<p>To bruteforce the header we can use a tool like bruteforce-luks.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">bruteforce-luks -t <span style="color:#ae81ff">8</span> -v <span style="color:#ae81ff">60</span> -f dictionary.txt /dev/sdd1</code></pre></div>
+<p><strong>-t</strong> CPU threads to be used</p>
+<p><strong>-v</strong> Print progress information every x seconds</p>
+<p><strong>-f</strong>  path to the diccionary</p>
+<p><strong>/dev/sdxx</strong> path to the encrypted drive partition</p>
+
+        </article>
+    </div>
+
+    
+
+            </div>
+        </div><footer class="text-center pb-1">
+    <small class="text-muted">
+        
+            &copy; Copyright 2023, Dip Pablo
+        
+        <br>
+        Powered by <a href="https://gohugo.io/" target="_blank">Hugo</a>
+        and <a href="https://github.com/austingebauer/devise" target="_blank">Devise</a>
+    </small>
+</footer>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>https://pablodip.me/categories/azure/</loc>
+    <lastmod>2023-08-03T16:16:39-03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pablodip.me/categories/</loc>
+    <lastmod>2023-08-03T16:16:39-03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pablodip.me/categories/devops/</loc>
+    <lastmod>2023-08-03T16:16:39-03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pablodip.me/post/deployment-counter/</loc>
+    <lastmod>2023-08-03T16:16:39-03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pablodip.me/post/</loc>
+    <lastmod>2023-08-03T16:16:39-03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pablodip.me/categories/cryptography/</loc>
+    <lastmod>2023-07-06T14:55:04-03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pablodip.me/categories/cybersecurity/</loc>
+    <lastmod>2023-07-06T14:55:04-03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pablodip.me/post/encrypted-external-storage/</loc>
+    <lastmod>2023-07-06T14:55:04-03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pablodip.me/post/encrypted-proxmox/</loc>
+    <lastmod>2023-06-06T16:46:34-03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pablodip.me/</loc>
+    <lastmod>2023-06-04T17:13:57-03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pablodip.me/about/</loc>
+    <lastmod>2023-06-04T17:13:57-03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pablodip.me/categories/bruteforcing/</loc>
+    <lastmod>2023-06-04T16:16:39-03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pablodip.me/post/bruteforcing-luks/</loc>
+    <lastmod>2023-06-04T16:16:39-03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pablodip.me/categories/infosec/</loc>
+    <lastmod>2023-06-04T16:16:39-03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pablodip.me/categories/ci/cd/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pablodip.me/tags/</loc>
+  </url>
+  
+</urlset>

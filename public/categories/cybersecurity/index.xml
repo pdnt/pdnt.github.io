@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Cybersecurity on Pablo Dip</title>
+    <link>https://pablodip.me/categories/cybersecurity/</link>
+    <description>Recent content in Cybersecurity on Pablo Dip</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; Copyright 2023, Dip Pablo</copyright>
+    <lastBuildDate>Thu, 06 Jul 2023 14:55:04 -0300</lastBuildDate><atom:link href="https://pablodip.me/categories/cybersecurity/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Encrypting External Storage for Enhanced Security</title>
+      <link>https://pablodip.me/post/encrypted-external-storage/</link>
+      <pubDate>Thu, 06 Jul 2023 14:55:04 -0300</pubDate>
+      
+      <guid>https://pablodip.me/post/encrypted-external-storage/</guid>
+      <description>Protecting sensitive information from unauthorized access and potential breaches is crucial, especially when it comes to external storage devices like USB drives, which are susceptible to loss or theft.
+After setting up an encrypted Proxmox instance on my server, I needed to protect my external storage. It wouldnt be very usefull to run my hypervisor over an encrypted LVM volume if I store all my backups and data on a open HDD.</description>
+    </item>
+    
+    <item>
+      <title>Installing an encrypted Proxmox instance</title>
+      <link>https://pablodip.me/post/encrypted-proxmox/</link>
+      <pubDate>Tue, 06 Jun 2023 16:46:34 -0300</pubDate>
+      
+      <guid>https://pablodip.me/post/encrypted-proxmox/</guid>
+      <description>Although Proxmox VE is a Debian-based Linux distribution, its installer doesn&amp;rsquo;t offer us the possibility of setting up an encrypted LVM. To install proxmox over an encrypted drive we need to install Debian 11 first, change the network configuration, and then install the proxmox packages.
+Installing Debian 11 (Bullseye) Download Debian from the official website https://www.debian.org/download, along with the SHA512SUMS and the Signature.
+Generate a checksum for the ISO file and save it: sha512sum debian-11.</description>
+    </item>
+    
+    <item>
+      <title>Bruteforcing a fully encrypted LVM drive</title>
+      <link>https://pablodip.me/post/bruteforcing-luks/</link>
+      <pubDate>Sun, 04 Jun 2023 16:16:39 -0300</pubDate>
+      
+      <guid>https://pablodip.me/post/bruteforcing-luks/</guid>
+      <description>One of the most crucial lessons that security professionals and enthusiasts must grasp is that security policies should be tailored to a business&amp;rsquo;s needs, and realistic goals should be set for their implementation. I learned this lesson many years ago by forgetting the last 4 chars of my 45-character-long password.
+Back in 2014, &amp;ldquo;No Place to Hide&amp;rdquo; by Glenn Greenwald had just come out, and the side effect of reading it in a couple of days is a bit of paranoia.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en-us"><head>
+    <title>Pablo Dip</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="" />
+
+    
+    
+    
+    <link rel="stylesheet" href="../../css/theme.min.css">
+
+    
+    
+    
+
+    
+</head>
+<body>
+        <div id="content" class="mx-auto"><header class="container mt-sm-5 mt-4 mb-4 mt-xs-1">
+    <div class="row">
+        
+        <div class="col-sm-4 col-12 text-sm-right text-center pt-sm-4">
+            <a href="../../" class="text-decoration-none">
+                <img id="home-image" class="rounded-circle"
+                    
+                        
+                            src="../../avatar.jpg"
+                        
+                    
+                />
+            </a>
+        </div>
+        <div class="col-sm-8 col-12 text-sm-left text-center">
+        
+            <h2 class="m-0 mb-2 mt-4">
+                <a href="../../" class="text-decoration-none">
+                    
+                        Pablo Dip
+                    
+                </a>
+            </h2>
+            <p class="text-muted mb-1">
+                
+                    DevOps and security enthusiast | Argentina
+                
+            </p>
+            <ul id="nav-links" class="list-inline mb-2">
+                
+                
+                    <li class="list-inline-item">
+                        <a class="badge badge-white " href="../../" title="About">About</a>
+                    </li>
+                
+                    <li class="list-inline-item">
+                        <a class="badge badge-white " href="../../post/" title="Posts">Posts</a>
+                    </li>
+                
+                    <li class="list-inline-item">
+                        <a class="badge badge-white " href="../../categories/" title="Categories">Categories</a>
+                    </li>
+                
+            </ul>
+            <ul id="nav-social" class="list-inline">
+                
+                    <li class="list-inline-item mr-3">
+                        <a href="http://github.com/pdnt" target="_blank">
+                            <i class="fab fa-github fa-1x text-muted"></i>
+                        </a>
+                    </li>
+                
+                    <li class="list-inline-item mr-3">
+                        <a href="https://www.linkedin.com/in/pablo-dip-24b33b1b0/" target="_blank">
+                            <i class="fab fa-linkedin-in fa-1x text-muted"></i>
+                        </a>
+                    </li>
+                
+                    <li class="list-inline-item mr-3">
+                        <a href="mailto:pablodip@protonmail.com" target="_blank">
+                            <i class="fas fa-at fa-1x text-muted"></i>
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+    <hr />
+</header>
+<div class="container">
+    <div class="pl-sm-2">
+        <div class="mb-3">
+            <h3 class="mb-0">Integrating a deployment counter to your CI/CD pipeline</h3>
+            
+            <small class="text-muted">Published August 3, 2023</small>
+        </div>
+
+        <article>
+            <p>I was reading a blog by Chad Carlson about <a href="https://platform.sh/blog/measuring-the-success-of-a-deployment-with-githubactions/">Measuring Deployment Success with GitHub Actions</a> and I noticed a stylish deployment counter featured at the bottom of their website, highlighting their platform&rsquo;s successful deployments. While a PaaS provider like <a href="https://platform.sh">platform.sh</a> will have many more deployments than my personal website, i feelt inspired to create a similar counter and integrate it into my CI/CD pipeline.</p>
+<p>For some context, my website is a static website built using hugo and hosted on Azure as a Static Web App. The entire codebase resides in a GitHub repository, and I&rsquo;ve set up a streamlined CI/CD pipeline to trigger deployment to Azure upon a specific event, successful commits.</p>
+<p>For my approach, I&rsquo;ll use Github Actions to create a workflow that increments a counter that will keeps track of all of my successful deployments.</p>
+<p>This counter will be called <code>deployment_counter.txt</code>, will contain an integer and will be located inside folder called <code>counter</code>.</p>
+<p>First, let&rsquo;s take a look at the finished workflow:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#f92672">name</span>: <span style="color:#ae81ff">Update Deployment Counter</span>
+
+<span style="color:#f92672">on</span>:
+  <span style="color:#f92672">workflow_run</span>:
+    <span style="color:#f92672">workflows</span>: [<span style="color:#ae81ff">Azure Static Web Apps CI/CD]</span>
+    <span style="color:#f92672">branches</span>: [<span style="color:#ae81ff">main]</span>
+    <span style="color:#f92672">types</span>:
+      - <span style="color:#ae81ff">completed</span>
+
+<span style="color:#f92672">jobs</span>:
+  <span style="color:#f92672">update_counter</span>:
+    <span style="color:#f92672">runs-on</span>: <span style="color:#ae81ff">ubuntu-latest</span>
+    <span style="color:#f92672">if</span>: <span style="color:#ae81ff">${{ github.event.workflow_run.conclusion == &#39;success&#39; }}</span>
+    <span style="color:#f92672">steps</span>:
+      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Checkout Repository</span>
+        <span style="color:#f92672">uses</span>: <span style="color:#ae81ff">actions/checkout@v2</span>
+
+      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Increment Counter</span>
+        <span style="color:#f92672">id</span>: <span style="color:#ae81ff">increment_counter</span>
+        <span style="color:#f92672">run</span>: <span style="color:#ae81ff">./scripts/counter.sh</span>
+
+      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Update resources</span>
+        <span style="color:#f92672">uses</span>: <span style="color:#ae81ff">test-room-7/action-update-file@v1</span>
+        <span style="color:#f92672">with</span>:
+            <span style="color:#f92672">file-path</span>: <span style="color:#ae81ff">counter/deployment_counter.txt</span>
+            <span style="color:#f92672">commit-msg</span>: <span style="color:#ae81ff">Update counter</span>
+            <span style="color:#f92672">github-token</span>: <span style="color:#ae81ff">${{ secrets.ACTIONSCOUNTER_TOKEN }}</span></code></pre></div>
+<h5 id="now-lets-analize-the-yml-file-that-defines-the-workflow">Now lets analize the yml file that defines the workflow:</h5>
+<p><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#f92672">name</span>: <span style="color:#ae81ff">Update Deployment Counter</span></code></pre></div>
+The name of the workflow as it will appear in the &ldquo;Actions&rdquo; tab of the GitHub repository.</p>
+<hr>
+<p><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#66d9ef">on</span>:</code></pre></div>
+Specifies the trigger for this workflow.</p>
+<hr>
+<p><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#f92672">on</span>:
+  <span style="color:#f92672">workflow_run</span>:
+    <span style="color:#f92672">workflows</span>: [<span style="color:#ae81ff">Azure Static Web Apps CI/CD]</span>
+    <span style="color:#f92672">branches</span>: [<span style="color:#ae81ff">main]</span></code></pre></div>
+When using the <code>workflow_run</code> event, you can specify what branches the triggering workflow must run on in order to trigger your workflow.</p>
+<p>For example, this workflow will only run when the workflow named <code>Azure Static Web Apps CI/CD</code> runs on a branch whose name starts with <code>main</code>.</p>
+<p>The workflow <code>Azure Static Web Apps CI/CD</code>  monitors the repository for changes. As commits are pushed to the <code>main</code> branch, the application is built from the <code>app_location</code> folder and files in the <code>output_location</code> are served to the public web.</p>
+<hr>
+<p><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#f92672">types</span>:
+  - <span style="color:#ae81ff">completed</span></code></pre></div>
+Will make sure that the workflow runs when check suite activity occurs. A check suite is a collection of the check runs created for a specific commit.</p>
+<hr>
+<p><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#ae81ff">jobs:</span></code></pre></div>
+Groups together all the jobs that run in the <code>Update deployment counter</code> workflow.</p>
+<hr>
+<p><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#ae81ff">update_counter:</span></code></pre></div>
+Defines a job named <code>update_counter</code>. The child keys will define properties of the job.</p>
+<hr>
+<p><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#f92672">runs-on</span>: <span style="color:#ae81ff">ubuntu-latest</span></code></pre></div>
+Configures the job to run on the latest version of an Ubuntu Linux runner. This means that the job will execute on a fresh virtual machine hosted by GitHub.</p>
+<hr>
+<p><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#f92672">if</span>: <span style="color:#ae81ff">${{ github.event.workflow_run.conclusion == &#39;success&#39; }}</span></code></pre></div>
+Will run the <code>steps</code> based on the result of the triggering workflow. In this case, this workflow will run based on the successful conclusion of the <code>Azure Static Web Apps CI/CD</code> workflow.</p>
+<h2 id="avoiding-an-infinite-loop">Avoiding an infinite loop</h2>
+<p>You may have realized that when the <code>Azure Static Web Apps CI/CD</code> workflow is triggered due to a successful change in the repository, it, in turn, fires off the <code>Update Deployment Counter</code> workflow. The latter is responsible for updating the text file that logs successful deployments. However, this update acts as an event in itself, triggering the <code>Azure Static Web Apps CI/CD</code> workflow yet again, thus creating an infinite loop.</p>
+<p>Thankfully, github actions gives us many tools to use in our workflows.</p>
+<p>Let’s take a look to a snippet of the <code>Azure Static Web Apps CI/CD</code> workflow:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#f92672">name</span>: <span style="color:#ae81ff">Azure Static Web Apps CI/CD</span>
+
+<span style="color:#f92672">on</span>:
+  <span style="color:#f92672">push</span>:
+    <span style="color:#f92672">paths-ignore</span>: <span style="color:#ae81ff">counter/deployment_counter.txt</span>
+    <span style="color:#f92672">branches</span>:
+      - <span style="color:#ae81ff">main</span>
+  <span style="color:#f92672">pull_request</span>:
+    <span style="color:#f92672">paths-ignore</span>: <span style="color:#ae81ff">counter/deployment_counter.txt</span>
+    <span style="color:#f92672">types</span>: [<span style="color:#ae81ff">opened, synchronize, reopened, closed]</span>
+    <span style="color:#f92672">branches</span>:
+      - <span style="color:#ae81ff">main</span></code></pre></div>
+<p>Here I used the <code>paths-ignore</code> filter to specify a path that will be ignored by the workflow. Meaning that any changes made to <code>deployment_counter.txt</code> will not be considered an event and therefore the workflow will not be triggered.</p>
+<p>You can see the counter implemented on <a href="https://pablodip.me/">my home page</a></p>
+<p> </p>
+
+        </article>
+    </div>
+
+    
+
+            </div>
+        </div><footer class="text-center pb-1">
+    <small class="text-muted">
+        
+            &copy; Copyright 2023, Dip Pablo
+        
+        <br>
+        Powered by <a href="https://gohugo.io/" target="_blank">Hugo</a>
+        and <a href="https://github.com/austingebauer/devise" target="_blank">Devise</a>
+    </small>
+</footer>
+</body>
+</html>
