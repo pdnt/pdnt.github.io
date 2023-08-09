@@ -2,7 +2,7 @@ name: Update Deployment Counter
 
 on:
   workflow_run:
-    workflows: [Azure Static Web Apps CI/CD]
+    workflows: [Hugo deploy]
     branches: [main]
     types:
       - completed
