@@ -1,6 +1,7 @@
 name: Hugo deploy
 on:
   push:
+    paths-ignore: counter/deployment_counter.txt
     branches: [main]
 
 jobs:
