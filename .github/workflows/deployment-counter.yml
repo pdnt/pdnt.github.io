@@ -1,0 +1,27 @@
+name: Update Deployment Counter
+
+on:
+  workflow_run:
+    workflows: [Hugo deploy]
+    branches: [main]
+    types:
+      - completed
+
+jobs:
+  update_counter:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Increment Counter
+        id: increment_counter
+        run: ./scripts/counter.sh
+
+      - name: Update resources
+        uses: test-room-7/action-update-file@v1
+        with:
+            file-path: counter/deployment_counter.txt
+            commit-msg: Update counter
+            github-token: ${{ secrets.ACTIONSCOUNTER_TOKEN }}
