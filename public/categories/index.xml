@@ -2,72 +2,72 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on Pablo Dip</title>
-    <link>/categories/</link>
+    <link>https://stpersonalwebsite01.z13.web.core.windows.net/categories/</link>
     <description>Recent content in Categories on Pablo Dip</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; Copyright 2023, Dip Pablo</copyright>
-    <lastBuildDate>Thu, 03 Aug 2023 16:16:39 -0300</lastBuildDate><atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 03 Aug 2023 16:16:39 -0300</lastBuildDate><atom:link href="https://stpersonalwebsite01.z13.web.core.windows.net/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Azure</title>
-      <link>/categories/azure/</link>
+      <link>https://stpersonalwebsite01.z13.web.core.windows.net/categories/azure/</link>
       <pubDate>Thu, 03 Aug 2023 16:16:39 -0300</pubDate>
       
-      <guid>/categories/azure/</guid>
+      <guid>https://stpersonalwebsite01.z13.web.core.windows.net/categories/azure/</guid>
       <description></description>
     </item>
     
     <item>
       <title>DevOps</title>
-      <link>/categories/devops/</link>
+      <link>https://stpersonalwebsite01.z13.web.core.windows.net/categories/devops/</link>
       <pubDate>Thu, 03 Aug 2023 16:16:39 -0300</pubDate>
       
-      <guid>/categories/devops/</guid>
+      <guid>https://stpersonalwebsite01.z13.web.core.windows.net/categories/devops/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Cryptography</title>
-      <link>/categories/cryptography/</link>
+      <link>https://stpersonalwebsite01.z13.web.core.windows.net/categories/cryptography/</link>
       <pubDate>Thu, 06 Jul 2023 14:55:04 -0300</pubDate>
       
-      <guid>/categories/cryptography/</guid>
+      <guid>https://stpersonalwebsite01.z13.web.core.windows.net/categories/cryptography/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Cybersecurity</title>
-      <link>/categories/cybersecurity/</link>
+      <link>https://stpersonalwebsite01.z13.web.core.windows.net/categories/cybersecurity/</link>
       <pubDate>Thu, 06 Jul 2023 14:55:04 -0300</pubDate>
       
-      <guid>/categories/cybersecurity/</guid>
+      <guid>https://stpersonalwebsite01.z13.web.core.windows.net/categories/cybersecurity/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Bruteforcing</title>
-      <link>/categories/bruteforcing/</link>
+      <link>https://stpersonalwebsite01.z13.web.core.windows.net/categories/bruteforcing/</link>
       <pubDate>Sun, 04 Jun 2023 16:16:39 -0300</pubDate>
       
-      <guid>/categories/bruteforcing/</guid>
+      <guid>https://stpersonalwebsite01.z13.web.core.windows.net/categories/bruteforcing/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Infosec</title>
-      <link>/categories/infosec/</link>
+      <link>https://stpersonalwebsite01.z13.web.core.windows.net/categories/infosec/</link>
       <pubDate>Sun, 04 Jun 2023 16:16:39 -0300</pubDate>
       
-      <guid>/categories/infosec/</guid>
+      <guid>https://stpersonalwebsite01.z13.web.core.windows.net/categories/infosec/</guid>
       <description></description>
     </item>
     
     <item>
       <title>CI/CD</title>
-      <link>/categories/ci/cd/</link>
+      <link>https://stpersonalwebsite01.z13.web.core.windows.net/categories/ci/cd/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/categories/ci/cd/</guid>
+      <guid>https://stpersonalwebsite01.z13.web.core.windows.net/categories/ci/cd/</guid>
       <description></description>
     </item>
     

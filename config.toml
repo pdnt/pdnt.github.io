@@ -14,7 +14,7 @@ copyright = "&copy; Copyright 2023, Dip Pablo"
     identifier = "about"
     name = "About"
     title = "About"
-    url = "/"
+    url = "/about"
     weight = -110
   [[menu.main]]
     identifier = "posts"
