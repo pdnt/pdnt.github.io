@@ -1,4 +1,4 @@
-baseURL = "https://stpersonalwebsite01.z13.web.core.windows.net/"
+baseURL = "/"
 title = "Pablo Dip"
 languageCode = "en-us"
 theme = "devise"
