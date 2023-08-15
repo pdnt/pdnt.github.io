@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>CI/CD on Pablo Dip</title>
-    <link>https://stpersonalwebsite01.z13.web.core.windows.net/categories/ci/cd/</link>
+    <link>https://www.pablodip.me/categories/ci/cd/</link>
     <description>Recent content in CI/CD on Pablo Dip</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <copyright>&amp;copy; Copyright 2023, Dip Pablo</copyright><atom:link href="https://stpersonalwebsite01.z13.web.core.windows.net/categories/ci/cd/index.xml" rel="self" type="application/rss+xml" />
+    <copyright>&amp;copy; Copyright 2023, Dip Pablo</copyright><atom:link href="https://www.pablodip.me/categories/ci/cd/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Integrating a deployment counter to your CI/CD pipeline</title>
-      <link>https://stpersonalwebsite01.z13.web.core.windows.net/post/deployment-counter/</link>
+      <link>https://www.pablodip.me/post/deployment-counter/</link>
       <pubDate>Thu, 03 Aug 2023 16:16:39 -0300</pubDate>
       
-      <guid>https://stpersonalwebsite01.z13.web.core.windows.net/post/deployment-counter/</guid>
+      <guid>https://www.pablodip.me/post/deployment-counter/</guid>
       <description>I was reading a blog by Chad Carlson about Measuring Deployment Success with GitHub Actions and I noticed a stylish deployment counter featured at the bottom of their website, highlighting their platform&amp;rsquo;s successful deployments. While a PaaS provider like platform.sh will have many more deployments than my personal website, i feelt inspired to create a similar counter and integrate it into my CI/CD pipeline.
 For some context, my website is a static website built using hugo and hosted on Azure as a Static Web App.</description>
     </item>
