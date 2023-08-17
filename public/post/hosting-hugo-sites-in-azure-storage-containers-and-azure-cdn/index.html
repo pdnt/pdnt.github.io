@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en-us"><head>
+    <title>Pablo Dip</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="" />
+
+    
+    
+    
+    <link rel="stylesheet" href="../../css/theme.min.css">
+
+    
+    
+    
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'https:\/\/www.googletagmanager.com\/gtag\/js?id=G-36K52CH2JM', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+</head>
+<body>
+        <div id="content" class="mx-auto"><header class="container mt-sm-5 mt-4 mb-4 mt-xs-1">
+    <div class="row">
+        
+        <div class="col-sm-4 col-12 text-sm-right text-center pt-sm-4">
+            <a href="../../" class="text-decoration-none">
+                <img id="home-image" class="rounded-circle"
+                    
+                        
+                            src="../../avatar.jpg"
+                        
+                    
+                />
+            </a>
+        </div>
+        <div class="col-sm-8 col-12 text-sm-left text-center">
+        
+            <h2 class="m-0 mb-2 mt-4">
+                <a href="../../" class="text-decoration-none">
+                    
+                        Pablo Dip
+                    
+                </a>
+            </h2>
+            <p class="text-muted mb-1">
+                
+                    DevOps and security enthusiast | Argentina
+                
+            </p>
+            <ul id="nav-links" class="list-inline mb-2">
+                
+                
+                    <li class="list-inline-item">
+                        <a class="badge badge-white " href="../../" title="About">About</a>
+                    </li>
+                
+                    <li class="list-inline-item">
+                        <a class="badge badge-white " href="../../post/" title="Posts">Posts</a>
+                    </li>
+                
+                    <li class="list-inline-item">
+                        <a class="badge badge-white " href="../../categories/" title="Categories">Categories</a>
+                    </li>
+                
+            </ul>
+            <ul id="nav-social" class="list-inline">
+                
+                    <li class="list-inline-item mr-3">
+                        <a href="http://github.com/pdnt" target="_blank">
+                            <i class="fab fa-github fa-1x text-muted"></i>
+                        </a>
+                    </li>
+                
+                    <li class="list-inline-item mr-3">
+                        <a href="https://www.linkedin.com/in/pablo-dip-24b33b1b0/" target="_blank">
+                            <i class="fab fa-linkedin-in fa-1x text-muted"></i>
+                        </a>
+                    </li>
+                
+                    <li class="list-inline-item mr-3">
+                        <a href="mailto:pablodip@protonmail.com" target="_blank">
+                            <i class="fas fa-at fa-1x text-muted"></i>
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+    <hr />
+</header>
+<div class="container">
+    <div class="pl-sm-2">
+        <div class="mb-3">
+            <h3 class="mb-0">From Static to Stellar: Hosting Hugo sites in Azure Storage containers &amp; Azure CDN</h3>
+            
+            <small class="text-muted">Published August 17, 2023</small>
+        </div>
+
+        <article>
+            <p>In this guide, we&rsquo;re diving into the world of hosting websites on Azure Storage Containers with the added benefit of Azure CDN. Although this is a step-by-step walkthrough, some experience with the Azure portal is required.</p>
+<p>After publishing my article “Integrating a deployment counter to your CI/CD pipeline”, my static website recibed about 1.3k visits, not alot but it was enough to notice some performance issues.</p>
+<p>To address this, I decided to transition from Azure Static Web Apps to a better setup using Azure Storage Containers and Azure CDN.
+ </p>
+<h1 id="create-a-storage-account">Create a storage account</h1>
+<p>First, we need to create a resource group that will contain all of the resources asociated with our website. Search for “resource group” on the Azure Portal marketplace. and select <strong>Create</strong>.</p>
+<p><img src="../../hosting-hugo-sites-in-azure-storage-containers/1mod.png" alt="1mod.png"></p>
+<p>To enhance resource consistency and readability, I recommend that you define a naming convention using the <a href="https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming">Azure Best Practices Guide</a>. Keep in mind that you might spend a few seconds thinking of a name, but you and members of your organization might read it hundreds or even thousens of times. So make sure to follow your organizations conventions and create a name that is clear and easy to read.</p>
+<p><img src="../../hosting-hugo-sites-in-azure-storage-containers/3.png" alt="3.png"></p>
+<p>Name your resource group and select select your preferred region.</p>
+<p><img src="../../hosting-hugo-sites-in-azure-storage-containers/2.png" alt="2.png"></p>
+<p>My resource group will be named <code>rg-websitetutorial-prod-eastus-01</code>.</p>
+<p>On your newly created resource group select <strong>Create</strong>. Doing so will take you to the Azure Marketplace again.</p>
+<p><img src="../../hosting-hugo-sites-in-azure-storage-containers/4mod.png" alt="4mod.png"></p>
+<p>Search for “Storage Account” and select <strong>Create</strong>.</p>
+<p><img src="../../hosting-hugo-sites-in-azure-storage-containers/5.png" alt="5.png"></p>
+<p>Define a storage account name. For this tutorial I will use <code>stwebsitetutorial01</code>.</p>
+<p>Select the desired region and replication strategy. These choices ensure your data&rsquo;s availability and durability.</p>
+<p><img src="../../hosting-hugo-sites-in-azure-storage-containers/6mod.png" alt="6mod.png">
+ </p>
+<h1 id="setting-up-a-static-website"><strong>Setting up a static website</strong></h1>
+<p>Static website hosting is a feature that you have to enable on your storage account.</p>
+<p>In the left navigation pane, under “Data management” select <strong>Static website</strong>, then <strong>Enabled</strong>.</p>
+<p>In the <strong>Index document name</strong> field, specify a default index page (For example: <em>index.html</em>). The default index page is displayed when a user navigates to the root of your static website.</p>
+<p>In the <strong>Error document path</strong> field, specify a default error page (For example: <em>404.html</em>). The default error page is displayed when a user attempts to navigate to a page that does not exist in your static website.</p>
+<p>Then, save the changes.</p>
+<p><img src="../../hosting-hugo-sites-in-azure-storage-containers/7mod.png" alt="7mod.png">
+ </p>
+<h3 id="upload-your-files"><strong>Upload your files</strong></h3>
+<p>Locally, the <img src="../../hugo2.png" alt="hugo"> command builds your site, publishing the files to the <code>public</code> directory. We will upload the files inside this directory to our Storage Account.</p>
+<p><img src="../../hosting-hugo-sites-in-azure-storage-containers/hugo2.png" alt="hugo2.png"></p>
+<p>Back on Azure, in the left navigation pane, sellect <strong>Containers</strong>. In the containers pane, you will see a newly created container named $web, select the container to open the container&rsquo;s <strong>Overview</strong> pane.</p>
+<p><img src="../../hosting-hugo-sites-in-azure-storage-containers/8mod.png" alt="8mod.png"></p>
+<p>In the <strong>Overview</strong> pane, select the <strong>Upload</strong> icon to open the <strong>Upload blob</strong> pane. Next, select the <strong>Files</strong> field within the <strong>Upload blob</strong> pane to open the file browser. Navigate to the public folder, select all the files inside it, and then select <strong>Open</strong> to populate the <strong>Files</strong> field.</p>
+<p><img src="../../hosting-hugo-sites-in-azure-storage-containers/9mod.png" alt="9mod.png"></p>
+<p>And that is all it takes to host your Hugo site on Azure. You can verify that everything is working by navigating to the storage account. On the left navigation pane, select <strong>Static Website,</strong> and there you will find the endpoints of your website. Access your website by visiting the URL of the primary endpoint. We will cover adding a custom domain later.</p>
+<p><img src="../../hosting-hugo-sites-in-azure-storage-containers/staticwebsiteendpointMOD.png" alt="staticwebsiteendpointMOD.png"></p>
+<p> </p>
+<h1 id="leveraging-azure-cdn"><strong>Leveraging Azure CDN</strong></h1>
+<p>A content delivery network (CDN) is a distributed network of servers that can efficiently deliver web content to users. A CDN stores cached content on edge servers in point-of-presence (POP) locations that are close to end users, to minimize latency.</p>
+<p>Azure CDN offers a global solution for rapidly delivering high-bandwidth content to users by caching their content at strategically placed physical nodes across the world.</p>
+<p><img src="../../hosting-hugo-sites-in-azure-storage-containers/azurecdn.png" alt="azurecdn">
+ </p>
+<h3 id="enable-azure-cdn-for-the-storage-account"><strong>Enable Azure CDN for the storage account</strong></h3>
+<p>On the page for your storage account, select <strong>Blob service</strong> &gt; <strong>Azure CDN</strong> from the left menu. The Front Door and CDN page appears.</p>
+<p><img src="../../hosting-hugo-sites-in-azure-storage-containers/10mod.png" alt="10mod.png"></p>
+<p>Select <strong>Azure CDN</strong> as the service type and fIll the <strong>New endpoint</strong> section, keep in mind that your CDN endpoint name must be globally unique across Azure because it&rsquo;s to access your cached resources at the URL <code>*&lt;endpoint-name&gt;*.azureedge.net</code>.</p>
+<p>Change the origin host name to the Primary endpoint of your static website.</p>
+<p><img src="../../hosting-hugo-sites-in-azure-storage-containers/11mod2.png" alt="11mod2.png"></p>
+<p>You can find the endpoint URL by accessing the static website pane of your storage account.</p>
+<p><img src="../../hosting-hugo-sites-in-azure-storage-containers/static.png" alt="static.png">
+ </p>
+<h3 id="adding-a-custom-domain">Adding a custom domain</h3>
+<p>Now that you have created an endpoint, you need to create a CNAME record for your website that points to the CDN endpoint we just created.
+ </p>
+<p><strong>What is a CNAME record?</strong></p>
+<p>A &ldquo;canonical name&rdquo; (CNAME) record points from an alias domain to a &ldquo;canonical&rdquo; domain. A CNAME record is used in lieu of an A record, when a domain or subdomain is an alias of another domain. All CNAME records must point to a domain, never to an IP address. Imagine a scavenger hunt where each clue points to another clue, and the final clue points to the treasure. A domain with a CNAME record is like a clue that can point you to another clue (another domain with a CNAME record) or to the treasure (a domain with an A record).
+ </p>
+<p>Create two CNAME records with your DNS provider—one with &ldquo;https&rdquo; as the <code>host</code> and another with &ldquo;www&rdquo;. The <code>value</code> for both records should be the endpoint hostname that Azure provides. You can find the endpoint URL in the previous step, or you can locate it in the resource pane of the endpoint you created.”</p>
+<p><img src="../../hosting-hugo-sites-in-azure-storage-containers/12mod.png" alt="12mod.png"></p>
+<p>Go to the azure portal, on the Overview pane of your endpoint select “Custom domain” add the hostname.</p>
+<p><img src="../../hosting-hugo-sites-in-azure-storage-containers/14mod2.png" alt="14mod2.png"></p>
+<p>Bear in mind that, at the time of this writing, Azure DNS doesn&rsquo;t support an apex or root domain with CDN Managed certificates. You must create, sign, and manage the renewal of your own certificate if you want to map the static website endpoint to a root domain. For now, this domain must adhere to the format: <code>www.yourwebsitehere.com</code>.</p>
+<p>The hostname will appear under “<strong>Custom domains</strong>” in the resource pane, click on it and enable HTTPS on your custom domain for SSL and secure delivery.</p>
+<p><img src="../../hosting-hugo-sites-in-azure-storage-containers/15mod.png" alt="15mod.png"></p>
+<p>Then, save the changes.</p>
+<p><img src="../../hosting-hugo-sites-in-azure-storage-containers/16mod.png" alt="16mod.png"></p>
+<p>With CDN managed certificate, Azure CDN can take care of certificate management tasks such as certificate procurement and renewal, with no additional fees. Or you can use your own certificate (stored in Azure Key vault) or purchase a new certificate through Key vault.</p>
+<p>You might have to wait for a few minutes for the changes to propagate.</p>
+<p>Now you can access your website using your custom domain!</p>
+<p>Using Azure Storage Containers and Azure CDN to host your Hugo website offers a dynamic solution for both optimizing performance and ensuring a seamless user experience. By effectively leveraging these Azure services, you&rsquo;ve not only enhanced your website&rsquo;s speed and reliability but also established a solid foundation for further scaling as your audience grows.</p>
+
+        </article>
+    </div>
+
+    
+
+            </div>
+        </div><footer class="text-center pb-1">
+    <small class="text-muted">
+        
+            &copy; Copyright 2023, Dip Pablo
+        
+        <br>
+        Powered by <a href="https://gohugo.io/" target="_blank">Hugo</a>
+        and <a href="https://github.com/austingebauer/devise" target="_blank">Devise</a>
+    </small>
+</footer>
+</body>
+</html>

@@ -7,7 +7,18 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; Copyright 2023, Dip Pablo</copyright>
-    <lastBuildDate>Thu, 03 Aug 2023 16:16:39 -0300</lastBuildDate><atom:link href="https://www.pablodip.me/categories/devops/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 17 Aug 2023 15:23:30 -0300</lastBuildDate><atom:link href="https://www.pablodip.me/categories/devops/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>From Static to Stellar: Hosting Hugo sites in Azure Storage containers &amp; Azure CDN</title>
+      <link>https://www.pablodip.me/post/hosting-hugo-sites-in-azure-storage-containers-and-azure-cdn/</link>
+      <pubDate>Thu, 17 Aug 2023 15:23:30 -0300</pubDate>
+      
+      <guid>https://www.pablodip.me/post/hosting-hugo-sites-in-azure-storage-containers-and-azure-cdn/</guid>
+      <description>In this guide, we&amp;rsquo;re diving into the world of hosting websites on Azure Storage Containers with the added benefit of Azure CDN. Although this is a step-by-step walkthrough, some experience with the Azure portal is required.
+After publishing my article “Integrating a deployment counter to your CI/CD pipeline”, my static website recibed about 1.3k visits, not alot but it was enough to notice some performance issues.
+To address this, I decided to transition from Azure Static Web Apps to a better setup using Azure Storage Containers and Azure CDN.</description>
+    </item>
+    
     <item>
       <title>Integrating a deployment counter to your CI/CD pipeline</title>
       <link>https://www.pablodip.me/post/deployment-counter/</link>
