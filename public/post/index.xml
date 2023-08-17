@@ -36,7 +36,7 @@ For some context, my website is a static website built using hugo and hosted on 
       
       <guid>https://pablodip.me/post/encrypted-external-storage/</guid>
       <description>Protecting sensitive information from unauthorized access and potential breaches is crucial, especially when it comes to external storage devices like USB drives, which are susceptible to loss or theft.
-After setting up an encrypted Proxmox instance on my server, I needed to protect my external storage. It wouldnt be very usefull to run my hypervisor over an encrypted LVM volume if I store all my backups and data on a open HDD.</description>
+After setting up an encrypted Proxmox instance on my server, I needed to protect my external storage. It wouldn&amp;rsquo;t be very usefull to run my hypervisor over an encrypted LVM volume if I store all my backups and data on a open HDD.</description>
     </item>
     
     <item>
