@@ -5,7 +5,7 @@ draft: false
 
 ### About
 
-Hello :wave: I'm Pablo Dip. I live in Tucuman, Argentina
+Hello :wave: I'm Pablo Dip. I live in Tucuman, Argentina.
 
 I'm a dedicated professional in the tech industry. I began my career as a technician in a computer store, where I cultivated a profound understanding of hardware and software components.
 
@@ -16,7 +16,7 @@ My journey is characterized by continuous growth and a commitment to staying upd
 ### Contact
 
 You can reach me by email at [pablodip@protonmail.com](mailto:pablodip@protonmail.com).
-You can also connect with me on [LinkedIn](https://www.linkedin.com/in/pablo-dip-24b33b1b0/) and [GitHub](https://github.com/pdnt)
+You can also connect with me on [LinkedIn](https://www.linkedin.com/in/pablo-dip-24b33b1b0/) and [GitHub](https://github.com/pdnt).
 
 &nbsp;
 
