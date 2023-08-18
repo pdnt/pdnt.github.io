@@ -3,20 +3,20 @@ title: "From Static to Stellar: Hosting Hugo sites in Azure Storage containers &
 date: 2023-08-17T15:23:30-03:00
 categories: [ "DevOps", "Azure"]
 ---
+After publishing my article "[Integrating a deployment counter to your CI/CD pipeline](https://pablodip.me/post/deployment-counter/)", my static website recibed about 1.3k visits, not alot but it was enough to notice some performance issues.
 
-In this guide, we're diving into the world of hosting websites on Azure Storage Containers with the added benefit of Azure CDN. Although this is a step-by-step walkthrough, some experience with the Azure portal is required.
+To address this, I decided to transition from Azure Static Web Apps to a better setup using Azure Storage Containers and Azure Content Delivery Network (CDN).
 
-After publishing my article “Integrating a deployment counter to your CI/CD pipeline”, my static website recibed about 1.3k visits, not alot but it was enough to notice some performance issues.
+In this guide, we're diving into the world of hosting websites on Azure with the added benefit of Azure CDN. Although this is a step-by-step walkthrough, some experience with the Azure portal is required.
 
-To address this, I decided to transition from Azure Static Web Apps to a better setup using Azure Storage Containers and Azure CDN.
 &nbsp;
-# Create a storage account
+## Create a storage account
 
 First, we need to create a resource group that will contain all of the resources asociated with our website. Search for “resource group” on the Azure Portal marketplace. and select **Create**.
 
 ![1mod.png](/hosting-hugo-sites-in-azure-storage-containers/1mod.png)
 
-To enhance resource consistency and readability, I recommend that you define a naming convention using the [Azure Best Practices Guide](https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming). Keep in mind that you might spend a few seconds thinking of a name, but you and members of your organization might read it hundreds or even thousens of times. So make sure to follow your organizations conventions and create a name that is clear and easy to read.
+To enhance resource consistency and readability, I recommend that you define a naming convention using the [Azure Best Practices Guide](https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming). Keep in mind that you might spend a few seconds thinking of a name, but you and members of your organization might read it hundreds or even thousands of times. So make sure to follow your organizations conventions and create a name that is clear and easy to read.
 
 ![3.png](/hosting-hugo-sites-in-azure-storage-containers/3.png)
 
@@ -40,7 +40,7 @@ Select the desired region and replication strategy. These choices ensure your da
 
 ![6mod.png](/hosting-hugo-sites-in-azure-storage-containers/6mod.png)
 &nbsp;
-# **Setting up a static website**
+## **Setting up a static website**
 
 Static website hosting is a feature that you have to enable on your storage account.
 
@@ -56,7 +56,7 @@ Then, save the changes.
 &nbsp;
 ### **Upload your files**
 
-Locally, the ![hugo](/hugo2.png) command builds your site, publishing the files to the `public` directory. We will upload the files inside this directory to our Storage Account.
+Locally, the `hugo` command builds your site, publishing the files to the `public` directory. We will upload the files inside this directory to our Storage Account.
 
 ![hugo2.png](/hosting-hugo-sites-in-azure-storage-containers/hugo2.png)
 
@@ -73,7 +73,7 @@ And that is all it takes to host your Hugo site on Azure. You can verify that ev
 ![staticwebsiteendpointMOD.png](/hosting-hugo-sites-in-azure-storage-containers/staticwebsiteendpointMOD.png)
 
 &nbsp;
-# **Leveraging Azure CDN**
+## **Leveraging Azure CDN**
 
 A content delivery network (CDN) is a distributed network of servers that can efficiently deliver web content to users. A CDN stores cached content on edge servers in point-of-presence (POP) locations that are close to end users, to minimize latency.
 
@@ -132,4 +132,20 @@ You might have to wait for a few minutes for the changes to propagate.
 
 Now you can access your website using your custom domain!
 
+&nbsp;
+### Verify latency metrics
+
+Latency is generally considered to be the amount of time it takes from when a request is made by the user to the time it takes for the response to get back to that user. On a first request, for the first 14Kb bytes, latency is longer because it includes a DNS lookup, a TCP handshake, the secure TLS negotiation. Subsequent requests will have less latency because the connection to the server is already set.
+
+Azure Storage provides two latency metrics for block blobs. You can access these metrics through the Azure portal by navigating to your storage account and selecting **Insights** from the left pane.
+
+**End-to-end (E2E) latency** measures the interval from when Azure Storage receives the first packet of the request until Azure Storage receives a client acknowledgment on the last packet of the response.
+
+**Server latency** measures the interval from when Azure Storage receives the last packet of the request until the first packet of the response is returned from Azure Storage.
+
+![latency.png](/hosting-hugo-sites-in-azure-storage-containers/latency.png)
+&nbsp;
+
 Using Azure Storage Containers and Azure CDN to host your Hugo website offers a dynamic solution for both optimizing performance and ensuring a seamless user experience. By effectively leveraging these Azure services, you've not only enhanced your website's speed and reliability but also established a solid foundation for further scaling as your audience grows.
+
+&nbsp;
