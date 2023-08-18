@@ -161,9 +161,13 @@ The run keyword tells the job to execute a command on the runner. In this case, 
       github-token: ${{ secrets.ACTIONSCOUNTER_TOKEN }}
 {{< /highlight >}}
 This `step` will `push` the changes made in the previous `step`. 
+
 `file-path:` Specifies the path where the changes were made.
+
 `commit-msg:` Provides a commit message.
+
 `github-token:` Defines the name of the GitHub `repository secret`. 
+
 `ACTIONSCOUNTER_TOKEN` Gives the workflow permissions to make changes to the repository. This secret is linked to a `token` that lists the allowed actions the workflow can perform.
 
 &nbsp;
