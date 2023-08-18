@@ -108,14 +108,14 @@ if (!doNotTrack) {
         </div>
 
         <article>
-            <p>In this guide, we&rsquo;re diving into the world of hosting websites on Azure Storage Containers with the added benefit of Azure CDN. Although this is a step-by-step walkthrough, some experience with the Azure portal is required.</p>
-<p>After publishing my article “Integrating a deployment counter to your CI/CD pipeline”, my static website recibed about 1.3k visits, not alot but it was enough to notice some performance issues.</p>
-<p>To address this, I decided to transition from Azure Static Web Apps to a better setup using Azure Storage Containers and Azure CDN.
- </p>
-<h1 id="create-a-storage-account">Create a storage account</h1>
+            <p>After publishing my article &ldquo;<a href="https://pablodip.me/post/deployment-counter/">Integrating a deployment counter to your CI/CD pipeline</a>&rdquo;, my static website recibed about 1.3k visits, not alot but it was enough to notice some performance issues.</p>
+<p>To address this, I decided to transition from Azure Static Web Apps to a better setup using Azure Storage Containers and Azure Content Delivery Network (CDN).</p>
+<p>In this guide, we&rsquo;re diving into the world of hosting websites on Azure with the added benefit of Azure CDN. Although this is a step-by-step walkthrough, some experience with the Azure portal is required.</p>
+<p> </p>
+<h2 id="create-a-storage-account">Create a storage account</h2>
 <p>First, we need to create a resource group that will contain all of the resources asociated with our website. Search for “resource group” on the Azure Portal marketplace. and select <strong>Create</strong>.</p>
 <p><img src="../../hosting-hugo-sites-in-azure-storage-containers/1mod.png" alt="1mod.png"></p>
-<p>To enhance resource consistency and readability, I recommend that you define a naming convention using the <a href="https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming">Azure Best Practices Guide</a>. Keep in mind that you might spend a few seconds thinking of a name, but you and members of your organization might read it hundreds or even thousens of times. So make sure to follow your organizations conventions and create a name that is clear and easy to read.</p>
+<p>To enhance resource consistency and readability, I recommend that you define a naming convention using the <a href="https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming">Azure Best Practices Guide</a>. Keep in mind that you might spend a few seconds thinking of a name, but you and members of your organization might read it hundreds or even thousands of times. So make sure to follow your organizations conventions and create a name that is clear and easy to read.</p>
 <p><img src="../../hosting-hugo-sites-in-azure-storage-containers/3.png" alt="3.png"></p>
 <p>Name your resource group and select select your preferred region.</p>
 <p><img src="../../hosting-hugo-sites-in-azure-storage-containers/2.png" alt="2.png"></p>
@@ -128,7 +128,7 @@ if (!doNotTrack) {
 <p>Select the desired region and replication strategy. These choices ensure your data&rsquo;s availability and durability.</p>
 <p><img src="../../hosting-hugo-sites-in-azure-storage-containers/6mod.png" alt="6mod.png">
  </p>
-<h1 id="setting-up-a-static-website"><strong>Setting up a static website</strong></h1>
+<h2 id="setting-up-a-static-website"><strong>Setting up a static website</strong></h2>
 <p>Static website hosting is a feature that you have to enable on your storage account.</p>
 <p>In the left navigation pane, under “Data management” select <strong>Static website</strong>, then <strong>Enabled</strong>.</p>
 <p>In the <strong>Index document name</strong> field, specify a default index page (For example: <em>index.html</em>). The default index page is displayed when a user navigates to the root of your static website.</p>
@@ -137,7 +137,7 @@ if (!doNotTrack) {
 <p><img src="../../hosting-hugo-sites-in-azure-storage-containers/7mod.png" alt="7mod.png">
  </p>
 <h3 id="upload-your-files"><strong>Upload your files</strong></h3>
-<p>Locally, the <img src="../../hugo2.png" alt="hugo"> command builds your site, publishing the files to the <code>public</code> directory. We will upload the files inside this directory to our Storage Account.</p>
+<p>Locally, the <code>hugo</code> command builds your site, publishing the files to the <code>public</code> directory. We will upload the files inside this directory to our Storage Account.</p>
 <p><img src="../../hosting-hugo-sites-in-azure-storage-containers/hugo2.png" alt="hugo2.png"></p>
 <p>Back on Azure, in the left navigation pane, sellect <strong>Containers</strong>. In the containers pane, you will see a newly created container named $web, select the container to open the container&rsquo;s <strong>Overview</strong> pane.</p>
 <p><img src="../../hosting-hugo-sites-in-azure-storage-containers/8mod.png" alt="8mod.png"></p>
@@ -146,7 +146,7 @@ if (!doNotTrack) {
 <p>And that is all it takes to host your Hugo site on Azure. You can verify that everything is working by navigating to the storage account. On the left navigation pane, select <strong>Static Website,</strong> and there you will find the endpoints of your website. Access your website by visiting the URL of the primary endpoint. We will cover adding a custom domain later.</p>
 <p><img src="../../hosting-hugo-sites-in-azure-storage-containers/staticwebsiteendpointMOD.png" alt="staticwebsiteendpointMOD.png"></p>
 <p> </p>
-<h1 id="leveraging-azure-cdn"><strong>Leveraging Azure CDN</strong></h1>
+<h2 id="leveraging-azure-cdn"><strong>Leveraging Azure CDN</strong></h2>
 <p>A content delivery network (CDN) is a distributed network of servers that can efficiently deliver web content to users. A CDN stores cached content on edge servers in point-of-presence (POP) locations that are close to end users, to minimize latency.</p>
 <p>Azure CDN offers a global solution for rapidly delivering high-bandwidth content to users by caching their content at strategically placed physical nodes across the world.</p>
 <p><img src="../../hosting-hugo-sites-in-azure-storage-containers/azurecdn.png" alt="azurecdn">
@@ -178,7 +178,16 @@ if (!doNotTrack) {
 <p>With CDN managed certificate, Azure CDN can take care of certificate management tasks such as certificate procurement and renewal, with no additional fees. Or you can use your own certificate (stored in Azure Key vault) or purchase a new certificate through Key vault.</p>
 <p>You might have to wait for a few minutes for the changes to propagate.</p>
 <p>Now you can access your website using your custom domain!</p>
+<p> </p>
+<h3 id="verify-latency-metrics">Verify latency metrics</h3>
+<p>Latency is generally considered to be the amount of time it takes from when a request is made by the user to the time it takes for the response to get back to that user. On a first request, for the first 14Kb bytes, latency is longer because it includes a DNS lookup, a TCP handshake, the secure TLS negotiation. Subsequent requests will have less latency because the connection to the server is already set.</p>
+<p>Azure Storage provides two latency metrics for block blobs. You can access these metrics through the Azure portal by navigating to your storage account and selecting <strong>Insights</strong> from the left pane.</p>
+<p><strong>End-to-end (E2E) latency</strong> measures the interval from when Azure Storage receives the first packet of the request until Azure Storage receives a client acknowledgment on the last packet of the response.</p>
+<p><strong>Server latency</strong> measures the interval from when Azure Storage receives the last packet of the request until the first packet of the response is returned from Azure Storage.</p>
+<p><img src="../../hosting-hugo-sites-in-azure-storage-containers/latency.png" alt="latency.png">
+ </p>
 <p>Using Azure Storage Containers and Azure CDN to host your Hugo website offers a dynamic solution for both optimizing performance and ensuring a seamless user experience. By effectively leveraging these Azure services, you&rsquo;ve not only enhanced your website&rsquo;s speed and reliability but also established a solid foundation for further scaling as your audience grows.</p>
+<p> </p>
 
         </article>
     </div>

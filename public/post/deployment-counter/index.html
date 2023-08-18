@@ -108,12 +108,23 @@ if (!doNotTrack) {
         </div>
 
         <article>
-            <p>I was reading a blog by Chad Carlson about <a href="https://platform.sh/blog/measuring-the-success-of-a-deployment-with-githubactions/">Measuring Deployment Success with GitHub Actions</a> and I noticed a stylish deployment counter featured at the bottom of their website, highlighting their platform&rsquo;s successful deployments. While a PaaS provider like <a href="https://platform.sh">platform.sh</a> will have many more deployments than my personal website, i feelt inspired to create a similar counter and integrate it into my CI/CD pipeline.</p>
+            <p>I was reading a blog by Chad Carlson about <a href="https://platform.sh/blog/measuring-the-success-of-a-deployment-with-githubactions/">Measuring Deployment Success with GitHub Actions</a> and I noticed a stylish deployment counter featured at the bottom of their website, highlighting their platform&rsquo;s successful deployments. While a PaaS provider like <a href="https://platform.sh">platform.sh</a> will have many more deployments than my personal website, I felt inspired to create a similar counter and integrate it into my CI/CD pipeline.</p>
 <p>For some context, my website is a static website built using hugo and hosted on Azure as a Static Web App. The entire codebase resides in a GitHub repository, and I&rsquo;ve set up a streamlined CI/CD pipeline to trigger deployment to Azure upon a specific event, successful commits.</p>
-<p>For my approach, I&rsquo;ll use Github Actions to create a workflow that increments a counter that will keeps track of all of my successful deployments.</p>
-<p>This counter will be called <code>deployment_counter.txt</code>, will contain an integer and will be located inside folder called <code>counter</code>.</p>
-<p>First, let&rsquo;s take a look at the finished workflow:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#f92672">name</span>: <span style="color:#ae81ff">Update Deployment Counter</span>
+<p>For my approach, I&rsquo;ll use Github Actions to create a workflow that increments a counter that will keep track of all of my successful deployments. This counter will be called <code>deployment_counter.txt</code>, will contain an integer and will be located inside folder called <code>counter</code>.</p>
+<h3 id="what-is-a-github-actions-workflow">What is a GitHub Actions Workflow?</h3>
+<p>A workflow is a configurable automated process that will run one or more jobs. Workflows are defined by a <code>YAML</code> file checked in to your repository and will run when triggered by an event in your repository, or they can be triggered manually, or at a defined schedule.</p>
+<p>Workflows are defined in the <code>.github/workflows</code> directory in a repository, and a repository can have multiple workflows, each of which can perform a different set of tasks.</p>
+<p>A workflow must contain the following basic components:</p>
+<ol>
+<li>One or more <code>events</code> that will trigger the workflow.</li>
+<li>One or more <code>jobs</code>, each of which will execute on a runner machine and run a series of one or more <code>steps</code>.</li>
+<li>Each <code>step</code> can either run a script that you define or run an action, which is a reusable extension that can simplify your workflow.</li>
+</ol>
+<p><img src="../../overview-actions-simple.webp" alt="overview-actions-simple">
+ </p>
+<h3 id="understanding-the-workflow">Understanding the workflow</h3>
+<p>First, let’s take a look at the finished workflow:</p>
+<p><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#f92672">name</span>: <span style="color:#ae81ff">Update Deployment Counter</span>
 
 <span style="color:#f92672">on</span>:
   <span style="color:#f92672">workflow_run</span>:
@@ -140,7 +151,8 @@ if (!doNotTrack) {
             <span style="color:#f92672">file-path</span>: <span style="color:#ae81ff">counter/deployment_counter.txt</span>
             <span style="color:#f92672">commit-msg</span>: <span style="color:#ae81ff">Update counter</span>
             <span style="color:#f92672">github-token</span>: <span style="color:#ae81ff">${{ secrets.ACTIONSCOUNTER_TOKEN }}</span></code></pre></div>
-<h5 id="now-lets-analize-the-yml-file-that-defines-the-workflow">Now lets analize the yml file that defines the workflow:</h5>
+ </p>
+<p>Let&rsquo;s analyze each line.</p>
 <p><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#f92672">name</span>: <span style="color:#ae81ff">Update Deployment Counter</span></code></pre></div>
 The name of the workflow as it will appear in the &ldquo;Actions&rdquo; tab of the GitHub repository.</p>
 <hr>
@@ -153,7 +165,7 @@ Specifies the trigger for this workflow.</p>
     <span style="color:#f92672">branches</span>: [<span style="color:#ae81ff">main]</span></code></pre></div>
 When using the <code>workflow_run</code> event, you can specify what branches the triggering workflow must run on in order to trigger your workflow.</p>
 <p>For example, this workflow will only run when the workflow named <code>Azure Static Web Apps CI/CD</code> runs on a branch whose name starts with <code>main</code>.</p>
-<p>The workflow <code>Azure Static Web Apps CI/CD</code>  monitors the repository for changes. As commits are pushed to the <code>main</code> branch, the application is built from the <code>app_location</code> folder and files in the <code>output_location</code> are served to the public web.</p>
+<p>The workflow <code>Azure Static Web Apps CI/CD</code>  monitors the repository for changes. As commits are pushed to the <code>main</code> branch, the application is built using another workflow.</p>
 <hr>
 <p><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#f92672">types</span>:
   - <span style="color:#ae81ff">completed</span></code></pre></div>
@@ -170,6 +182,28 @@ Configures the job to run on the latest version of an Ubuntu Linux runner. This 
 <hr>
 <p><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#f92672">if</span>: <span style="color:#ae81ff">${{ github.event.workflow_run.conclusion == &#39;success&#39; }}</span></code></pre></div>
 Will run the <code>steps</code> based on the result of the triggering workflow. In this case, this workflow will run based on the successful conclusion of the <code>Azure Static Web Apps CI/CD</code> workflow.</p>
+<hr>
+<p><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">- <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Checkout Repository</span>
+  <span style="color:#f92672">uses</span>: <span style="color:#ae81ff">actions/checkout@v2</span></code></pre></div>
+The <code>uses</code> keyword specifies that this step will run v2 of the <code>actions/checkout</code> action. This is an action that checks out your repository onto the runner, allowing you to run scripts or other actions against your code (such as build and test tools). You should use the checkout action any time your workflow will use the repository&rsquo;s code.</p>
+<hr>
+<p><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">- <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Increment Counter</span>
+  <span style="color:#f92672">id</span>: <span style="color:#ae81ff">increment_counter</span>
+  <span style="color:#f92672">run</span>: <span style="color:#ae81ff">./scripts/counter.sh</span></code></pre></div>
+The run keyword tells the job to execute a command on the runner. In this case, we will use a <code>bash</code> script to increment the number stored in the counter.txt file.</p>
+<hr>
+<p><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">- <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Update resources</span>
+  <span style="color:#f92672">uses</span>: <span style="color:#ae81ff">test-room-7/action-update-file@v1</span>
+  <span style="color:#f92672">with</span>:
+      <span style="color:#f92672">file-path</span>: <span style="color:#ae81ff">counter/deployment_counter.txt</span>
+      <span style="color:#f92672">commit-msg</span>: <span style="color:#ae81ff">Update counter</span>
+      <span style="color:#f92672">github-token</span>: <span style="color:#ae81ff">${{ secrets.ACTIONSCOUNTER_TOKEN }}</span></code></pre></div>
+This <code>step</code> will <code>push</code> the changes made in the previous <code>step</code>.
+<code>file-path:</code> Specifies the path where the changes were made.
+<code>commit-msg:</code> Provides a commit message.
+<code>github-token:</code> Defines the name of the GitHub <code>repository secret</code>.
+<code>ACTIONSCOUNTER_TOKEN</code> Gives the workflow permissions to make changes to the repository. This secret is linked to a <code>token</code> that lists the allowed actions the workflow can perform.</p>
+<p> </p>
 <h2 id="avoiding-an-infinite-loop">Avoiding an infinite loop</h2>
 <p>You may have realized that when the <code>Azure Static Web Apps CI/CD</code> workflow is triggered due to a successful change in the repository, it, in turn, fires off the <code>Update Deployment Counter</code> workflow. The latter is responsible for updating the text file that logs successful deployments. However, this update acts as an event in itself, triggering the <code>Azure Static Web Apps CI/CD</code> workflow yet again, thus creating an infinite loop.</p>
 <p>Thankfully, github actions gives us many tools to use in our workflows.</p>
@@ -187,7 +221,12 @@ Will run the <code>steps</code> based on the result of the triggering workflow. 
     <span style="color:#f92672">branches</span>:
       - <span style="color:#ae81ff">main</span></code></pre></div>
 <p>Here I used the <code>paths-ignore</code> filter to specify a path that will be ignored by the workflow. Meaning that any changes made to <code>deployment_counter.txt</code> will not be considered an event and therefore the workflow will not be triggered.</p>
-<p>You can see the counter implemented on <a href="https://pablodip.me/">my home page</a></p>
+<hr>
+<p>Using markdown we can read the file stored in <code>counter/deployment_counter.txt</code>:</p>
+<p>This site has <code>145</code> successful deployments!
+This number is updated automatically with every successful deployment.</p>
+<p>This practical implementation underscores the potency of controlled workflows, code management, continuous integration and continuous delivery.</p>
+<p>You can also see the counter implemented on <a href="https://pablodip.me/">my home page</a></p>
 <p> </p>
 
         </article>
