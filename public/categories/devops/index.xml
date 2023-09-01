@@ -7,7 +7,17 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; Copyright 2023, Dip Pablo</copyright>
-    <lastBuildDate>Thu, 17 Aug 2023 15:23:30 -0300</lastBuildDate><atom:link href="https://pablodip.me/categories/devops/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 01 Sep 2023 11:11:00 -0300</lastBuildDate><atom:link href="https://pablodip.me/categories/devops/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Mapping an apex domain to an Azure CDN endpoint with automated SSL Certificate management</title>
+      <link>https://pablodip.me/post/mapping-an-apex-domain-to-an-azure-cdn-endpoint-with-automated-ssl-certificate-management/</link>
+      <pubDate>Fri, 01 Sep 2023 11:11:00 -0300</pubDate>
+      
+      <guid>https://pablodip.me/post/mapping-an-apex-domain-to-an-azure-cdn-endpoint-with-automated-ssl-certificate-management/</guid>
+      <description>Following up the theme of my previous article From Static to Stellar: Hosting Hugo sites in Azure Storage containers &amp;amp; Azure CDN, I will show you how to map a root domain to an Azure CDN endpoint.
+At the time of this writing, Azure doesn&amp;rsquo;t support root domains using Azure CDN Managed certificates. The Azure documentation gives us two options to map the root domain, you can use your own certificate (stored in Azure Key vault) or you can purchase a new certificate through Key vault.</description>
+    </item>
+    
     <item>
       <title>From Static to Stellar: Hosting Hugo sites in Azure Storage containers &amp; Azure CDN</title>
       <link>https://pablodip.me/post/hosting-hugo-sites-in-azure-storage-containers-and-azure-cdn/</link>

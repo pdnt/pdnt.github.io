@@ -198,11 +198,11 @@ The run keyword tells the job to execute a command on the runner. In this case, 
       <span style="color:#f92672">file-path</span>: <span style="color:#ae81ff">counter/deployment_counter.txt</span>
       <span style="color:#f92672">commit-msg</span>: <span style="color:#ae81ff">Update counter</span>
       <span style="color:#f92672">github-token</span>: <span style="color:#ae81ff">${{ secrets.ACTIONSCOUNTER_TOKEN }}</span></code></pre></div>
-This <code>step</code> will <code>push</code> the changes made in the previous <code>step</code>.
-<code>file-path:</code> Specifies the path where the changes were made.
-<code>commit-msg:</code> Provides a commit message.
-<code>github-token:</code> Defines the name of the GitHub <code>repository secret</code>.
-<code>ACTIONSCOUNTER_TOKEN</code> Gives the workflow permissions to make changes to the repository. This secret is linked to a <code>token</code> that lists the allowed actions the workflow can perform.</p>
+This <code>step</code> will <code>push</code> the changes made in the previous <code>step</code>.</p>
+<p><code>file-path:</code> Specifies the path where the changes were made.</p>
+<p><code>commit-msg:</code> Provides a commit message.</p>
+<p><code>github-token:</code> Defines the name of the GitHub <code>repository secret</code>.</p>
+<p><code>ACTIONSCOUNTER_TOKEN</code> Gives the workflow permissions to make changes to the repository. This secret is linked to a <code>token</code> that lists the allowed actions the workflow can perform.</p>
 <p> </p>
 <h2 id="avoiding-an-infinite-loop">Avoiding an infinite loop</h2>
 <p>You may have realized that when the <code>Azure Static Web Apps CI/CD</code> workflow is triggered due to a successful change in the repository, it, in turn, fires off the <code>Update Deployment Counter</code> workflow. The latter is responsible for updating the text file that logs successful deployments. However, this update acts as an event in itself, triggering the <code>Azure Static Web Apps CI/CD</code> workflow yet again, thus creating an infinite loop.</p>
@@ -223,7 +223,7 @@ This <code>step</code> will <code>push</code> the changes made in the previous <
 <p>Here I used the <code>paths-ignore</code> filter to specify a path that will be ignored by the workflow. Meaning that any changes made to <code>deployment_counter.txt</code> will not be considered an event and therefore the workflow will not be triggered.</p>
 <hr>
 <p>Using markdown we can read the file stored in <code>counter/deployment_counter.txt</code>:</p>
-<p>This site has <code>145</code> successful deployments!
+<p>This site has <code>147</code> successful deployments!
 This number is updated automatically with every successful deployment.</p>
 <p>This practical implementation underscores the potency of controlled workflows, code management, continuous integration and continuous delivery.</p>
 <p>You can also see the counter implemented on <a href="https://pablodip.me/">my home page</a></p>
