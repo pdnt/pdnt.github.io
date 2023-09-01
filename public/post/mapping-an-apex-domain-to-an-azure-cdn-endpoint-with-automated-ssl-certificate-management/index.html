@@ -134,10 +134,10 @@ The Let’s Encrypt CA will look at the domain name being requested and issue on
 </ul>
 <p>Along with the challenges, the Let’s Encrypt CA also provides a nonce that the agent must sign with its private key pair to prove that it controls the key pair.</p>
 <p>The agent software completes one of the provided sets of challenges. Let’s say it is able to accomplish the first task above. To prove that you control <a href="http://www.example.com">www.example.com</a>, you create a TXT record at <code>_acme-challenge.www.example.com</code> with a “digest value” as specified by ACME (your ACME client should take care of creating this digest value for you). When the TXT record is ready, your ACME client informs the ACME server (Let’s Encrypt) that the domain is ready for validation. The ACME server looks up the TXT record, compares it to the expected digest value, and if the result is correct, considers your account authorized to issue for <a href="http://www.example.com/"><code>www.example.com</code></a>. Your client can set up this TXT record (or a CNAME) without interfering with normal website operations.</p>
-<p><img src="../../mapping-an-apex-domain-to-an-Azure-CDN-endpoint-with-automated-SSL-Certificate-management/azureDiagram.png" alt="azureDiagram.png"></p>
+<p><img src="../../mapping-an-apex-domain-to-an-azure-cdn-endpoint-with-automated-ssl-certificate-management/azureDiagram.png" alt="azureDiagram.png"></p>
 <h4 id="deployment">Deployment</h4>
 <p>To deploy Keyvault Acmebot, access the project&rsquo;s repository at  <a href="https://github.com/shibayan/keyvault-acmebot">https://github.com/shibayan/keyvault-acmebot</a> and click on the &ldquo;<strong>Deploy to Azure</strong>&rdquo; button.</p>
-<p><img src="../../mapping-an-apex-domain-to-an-Azure-CDN-endpoint-with-automated-SSL-Certificate-management/1.png" alt="1.png"></p>
+<p><img src="../../mapping-an-apex-domain-to-an-azure-cdn-endpoint-with-automated-ssl-certificate-management/1.png" alt="1.png"></p>
 <p>This will deploy a remote ARM template that is composed of these 7 resources:</p>
 <ul>
 <li>Storage account</li>
@@ -148,7 +148,7 @@ The Let’s Encrypt CA will look at the domain name being requested and issue on
 <li>Key vault</li>
 <li>Role assignments</li>
 </ul>
-<p><img src="../../mapping-an-apex-domain-to-an-Azure-CDN-endpoint-with-automated-SSL-Certificate-management/2.png" alt="2.png"></p>
+<p><img src="../../mapping-an-apex-domain-to-an-azure-cdn-endpoint-with-automated-ssl-certificate-management/2.png" alt="2.png"></p>
 <p>Let’s fill the required details:</p>
 <ul>
 <li>Resource group: I recommend creating a new resource group to facilitate the management of your resources. In this example, I will create it with the name <code>rg-websiteexample-prod-01</code>.</li>
@@ -157,41 +157,41 @@ The Let’s Encrypt CA will look at the domain name being requested and issue on
 <li>Acme Endpoint: In this article I’m using “Let’s Encrypt”, but you can choose a different certificate provider.</li>
 <li>Create With Key Vault: Choose &ldquo;true&rdquo; if you wish to create a new Key Vault for certificate storage. Alternatively, select &ldquo;false&rdquo; and provide a value for the &ldquo;Key Vault Base URL&rdquo; option.</li>
 </ul>
-<p><img src="../../mapping-an-apex-domain-to-an-Azure-CDN-endpoint-with-automated-SSL-Certificate-management/4.png" alt="4.png"></p>
+<p><img src="../../mapping-an-apex-domain-to-an-azure-cdn-endpoint-with-automated-ssl-certificate-management/4.png" alt="4.png"></p>
 <p>Click on <strong>Review + create</strong> and navigate to the newly created resource group.</p>
-<p><img src="../../mapping-an-apex-domain-to-an-Azure-CDN-endpoint-with-automated-SSL-Certificate-management/6mod.png" alt="6mod.png"></p>
+<p><img src="../../mapping-an-apex-domain-to-an-azure-cdn-endpoint-with-automated-ssl-certificate-management/6mod.png" alt="6mod.png"></p>
 <p>Here, the function app serves as the engine behind the bot, also driving and managing the rest of the resources.</p>
 <p>Inside the function app we can see all the functions that power the bot:</p>
-<p><img src="../../mapping-an-apex-domain-to-an-Azure-CDN-endpoint-with-automated-SSL-Certificate-management/7GIF.gif" alt="7GIF.gif"></p>
+<p><img src="../../mapping-an-apex-domain-to-an-azure-cdn-endpoint-with-automated-ssl-certificate-management/7GIF.gif" alt="7GIF.gif"></p>
 <h4 id="setting-up-permissions">Setting up permissions</h4>
 <p>The Azure RBAC roles assigned to this managed identity (the function app) doesn&rsquo;t allow us to create access policies for our key vault, wich are needed to give the function app access to it, that’s why we need to change the access configuration of our key vault.</p>
 <p><strong>Azure role-based access control</strong>: Azure RBAC is an authorization system built on ARM that provides fine-grained access management of Azure resources to grant access at a specific scope level by assigning appropriate Azure roles.</p>
 <p><strong>Vault access policy</strong>: A Key Vault access policy determines whether a given security principal, namely a user, application or user group, can perform different operations on keys, secrets and certificates.</p>
 <p>Navigate to the function app, under the left navigation pane select <strong>Identity</strong> and copy the <strong>Object (principal) ID</strong>.</p>
-<p><img src="../../mapping-an-apex-domain-to-an-Azure-CDN-endpoint-with-automated-SSL-Certificate-management/8mod.png" alt="8mod.png"></p>
+<p><img src="../../mapping-an-apex-domain-to-an-azure-cdn-endpoint-with-automated-ssl-certificate-management/8mod.png" alt="8mod.png"></p>
 <p>Now, go to your key vault, select <strong>Access configuration</strong> from the menu and change the permission model by selecting <strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>Vault access policy.</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong> Then, click on <strong><strong><strong><strong><strong>Apply</strong></strong></strong></strong></strong>.</p>
-<p><img src="../../mapping-an-apex-domain-to-an-Azure-CDN-endpoint-with-automated-SSL-Certificate-management/11.png" alt="11.png"></p>
+<p><img src="../../mapping-an-apex-domain-to-an-azure-cdn-endpoint-with-automated-ssl-certificate-management/11.png" alt="11.png"></p>
 <p>Let’s create a new policy that will allow our function app to access our key vault.</p>
 <p>Select <strong>Access Policies</strong> from the left navigation pane, and then click on <strong>Create</strong>.</p>
-<p><img src="../../mapping-an-apex-domain-to-an-Azure-CDN-endpoint-with-automated-SSL-Certificate-management/12mod.png" alt="12mod.png"></p>
+<p><img src="../../mapping-an-apex-domain-to-an-azure-cdn-endpoint-with-automated-ssl-certificate-management/12mod.png" alt="12mod.png"></p>
 <p>From the drop-down list select the “<strong>Key, Secret, &amp; Certificate Management</strong>” template.</p>
 <p>You can adjust permissions at a granular level to match your organization&rsquo;s needs, as long as they don’t revoke the permissions necessary to use the bot.</p>
 <p>After configuring the permissions, click on <strong>Next</strong>.</p>
-<p><img src="../../mapping-an-apex-domain-to-an-Azure-CDN-endpoint-with-automated-SSL-Certificate-management/13mod.png" alt="13mod.png"></p>
+<p><img src="../../mapping-an-apex-domain-to-an-azure-cdn-endpoint-with-automated-ssl-certificate-management/13mod.png" alt="13mod.png"></p>
 <p>On the “Principal” tab, paste the <strong>Object (principal) ID</strong> of the function app on the search bar, select the resource, and click on <strong>Next</strong>.</p>
 <p>Create the resource on the “Review + create” tab.</p>
-<p><img src="../../mapping-an-apex-domain-to-an-Azure-CDN-endpoint-with-automated-SSL-Certificate-management/14.png" alt="14.png"></p>
+<p><img src="../../mapping-an-apex-domain-to-an-azure-cdn-endpoint-with-automated-ssl-certificate-management/14.png" alt="14.png"></p>
 <p>As a result, the function app,  will be able to access the key vault to create and delete certificates. We give the function permissions to delete the certificates so that its able to renew them 30 days before their expiration.</p>
 <p>Now we need to setup permissions to access our function app dashboard. Since the dashboard is accessible from the internet by visiting a URL, we need to provide some type of authentication to restrict the access to specific users. To do so, navigate to the Function app resource page and select <strong>Authentication</strong> from the navigation pane, then, click on <strong>Add identity provider.</strong></p>
-<p><img src="../../mapping-an-apex-domain-to-an-Azure-CDN-endpoint-with-automated-SSL-Certificate-management/15mod.png" alt="15mod.png"></p>
+<p><img src="../../mapping-an-apex-domain-to-an-azure-cdn-endpoint-with-automated-ssl-certificate-management/15mod.png" alt="15mod.png"></p>
 <p>Select an identity provider from the drop-down list, for this tutorial I will use Microsoft. We can use the default options provided in this window.</p>
-<p><img src="../../mapping-an-apex-domain-to-an-Azure-CDN-endpoint-with-automated-SSL-Certificate-management/16mod.png" alt="16mod.png"></p>
+<p><img src="../../mapping-an-apex-domain-to-an-azure-cdn-endpoint-with-automated-ssl-certificate-management/16mod.png" alt="16mod.png"></p>
 <p>Now you can access the function app Dashboard using your Azure AD (or Microsoft Entra ID) Credentials.</p>
 <h4 id="creating-our-certificate">Creating our certificate</h4>
 <p>To access the acmebot dashboard, you need to visit the URL provided in the <strong><strong><strong><strong><strong><strong><strong><strong>Overview</strong></strong></strong></strong></strong></strong></strong></strong> pane of your function app.</p>
-<p><img src="../../mapping-an-apex-domain-to-an-Azure-CDN-endpoint-with-automated-SSL-Certificate-management/17mod.png" alt="17mod.png"></p>
+<p><img src="../../mapping-an-apex-domain-to-an-azure-cdn-endpoint-with-automated-ssl-certificate-management/17mod.png" alt="17mod.png"></p>
 <p>On the dashboard, an alert indicating the failure of the GetCertificates_Orchestrator fuction is expected to appear. This occurs because we haven&rsquo;t established communication between the DNS provider and the bot. This will be our next task.</p>
-<p><img src="../../mapping-an-apex-domain-to-an-Azure-CDN-endpoint-with-automated-SSL-Certificate-management/18.png" alt="18.png"></p>
+<p><img src="../../mapping-an-apex-domain-to-an-azure-cdn-endpoint-with-automated-ssl-certificate-management/18.png" alt="18.png"></p>
 <h4 id="dns-configuration"><strong>DNS Configuration</strong></h4>
 <p>Acmebot only supports the following DNS providers:</p>
 <ul>
@@ -208,14 +208,14 @@ The Let’s Encrypt CA will look at the domain name being requested and issue on
 <p>If your DNS provider is not on the list, you can implement your own API following the <a href="https://github.com/shibayan/keyvault-acmebot/wiki/DNS-Provider-Configuration">steps provided in the project’s wiki</a>.</p>
 <p>Another option available is migrating from your DNS provider to Azure DNS. In this tutorial, I will migrate my domain from Namecheap to Azure DNS.</p>
 <p>Let’s begin by creating a DNS zone. Search for “DNS zones” in the azure marketplace and create the resource. Select an existing resource group or create a new one. Under “Instance details”, enter only your website’s domain name, do not include a subdomain such as <code>www</code>. A correct name would be <code>pablodip.me</code>.</p>
-<p><img src="../../mapping-an-apex-domain-to-an-Azure-CDN-endpoint-with-automated-SSL-Certificate-management/19.png" alt="19.png"></p>
+<p><img src="../../mapping-an-apex-domain-to-an-azure-cdn-endpoint-with-automated-ssl-certificate-management/19.png" alt="19.png"></p>
 <p>After the resource is created, in the overview pane of the resource, you will find the 4 DNS servers that Azure has assigned to your DNS zone.</p>
-<p><img src="../../mapping-an-apex-domain-to-an-Azure-CDN-endpoint-with-automated-SSL-Certificate-management/20mod.png" alt="20mod.png"></p>
+<p><img src="../../mapping-an-apex-domain-to-an-azure-cdn-endpoint-with-automated-ssl-certificate-management/20mod.png" alt="20mod.png"></p>
 <p>Next, search for “Azure CDN profile” in the Azure Marketplace and create the resource.</p>
 <p>Choose &ldquo;Explore other offerings&rdquo;, and then select &ldquo;Azure CDN Standard from Microsoft (classic)&rdquo;.</p>
-<p><img src="../../mapping-an-apex-domain-to-an-Azure-CDN-endpoint-with-automated-SSL-Certificate-management/25.png" alt="25.png"></p>
+<p><img src="../../mapping-an-apex-domain-to-an-azure-cdn-endpoint-with-automated-ssl-certificate-management/25.png" alt="25.png"></p>
 <p>Fill in the details and select “Create a new endpoint”. In the &ldquo;Origin type&rdquo; drop-down menu, select &ldquo;Storage static website&rdquo;, and for the &ldquo;Origin hostname&rdquo;, pick the primary endpoint of your static website. Click on “Review + create”.</p>
-<p><img src="../../mapping-an-apex-domain-to-an-Azure-CDN-endpoint-with-automated-SSL-Certificate-management/26mod.png" alt="26mod.png"></p>
+<p><img src="../../mapping-an-apex-domain-to-an-azure-cdn-endpoint-with-automated-ssl-certificate-management/26mod.png" alt="26mod.png"></p>
 <p>If you haven&rsquo;t set up a CNAME record for your <code>www</code> subdomain in Azure, you need to create one.</p>
 <p>Go back to the overview pane of your DNS zone and click on “Record set” to create a CNAME record for our <code>www</code> subdomain.</p>
 <ul>
@@ -225,24 +225,24 @@ The Let’s Encrypt CA will look at the domain name being requested and issue on
 <li><strong>Azure resource</strong>: This is the endpoint where the record will take effect.</li>
 <li><strong>TTL</strong>: The time to live, or TTL, specifies how long each record is cached by clients before being queried. In the example below, the TTL is 3600 seconds or 1 hour.</li>
 </ul>
-<p><img src="../../mapping-an-apex-domain-to-an-Azure-CDN-endpoint-with-automated-SSL-Certificate-management/29mod.png" alt="29mod.png"></p>
+<p><img src="../../mapping-an-apex-domain-to-an-azure-cdn-endpoint-with-automated-ssl-certificate-management/29mod.png" alt="29mod.png"></p>
 <p>Now, let’s create an apex record for our domain. Most of the settings will remain the same, but be sure to select “A - Address record” and input the value “@” for the “Name” field.</p>
-<p><img src="../../mapping-an-apex-domain-to-an-Azure-CDN-endpoint-with-automated-SSL-Certificate-management/30mod.png" alt="30mod.png"></p>
+<p><img src="../../mapping-an-apex-domain-to-an-azure-cdn-endpoint-with-automated-ssl-certificate-management/30mod.png" alt="30mod.png"></p>
 <p>Now you can finally delete the records from your original DNS provider that point to your website.</p>
 <p>Warning: Deleting DNS records will result in temporary loss of access to the site.</p>
 <p>Namecheap offers the possibility of changing the nameservers by selecting the option to define custom DNS servers in the drop-down menu, under “Nameservers”.</p>
-<p><img src="../../mapping-an-apex-domain-to-an-Azure-CDN-endpoint-with-automated-SSL-Certificate-management/21.png" alt="21.png"></p>
+<p><img src="../../mapping-an-apex-domain-to-an-azure-cdn-endpoint-with-automated-ssl-certificate-management/21.png" alt="21.png"></p>
 <p>Remember the 4 DNS servers that Azure assigned to you? You can find them in the overview pane of your DNS zone.</p>
 <p>Let’s add each server to a new line on your DNS provider.</p>
-<p><img src="../../mapping-an-apex-domain-to-an-Azure-CDN-endpoint-with-automated-SSL-Certificate-management/22mod.png" alt="22mod.png"></p>
+<p><img src="../../mapping-an-apex-domain-to-an-azure-cdn-endpoint-with-automated-ssl-certificate-management/22mod.png" alt="22mod.png"></p>
 <p>Navigate to the overview pane of your CDN endpoint and click on “Custom domain”</p>
-<p><img src="../../mapping-an-apex-domain-to-an-Azure-CDN-endpoint-with-automated-SSL-Certificate-management/endpointmod.png" alt="endpointmod.png"></p>
+<p><img src="../../mapping-an-apex-domain-to-an-azure-cdn-endpoint-with-automated-ssl-certificate-management/endpointmod.png" alt="endpointmod.png"></p>
 <p>First, we will map the FQDN (Fully Qualified Domain Name).</p>
 <p>A Fully Qualified Domain Name is a domain name that specifies its exact location in the tree hierarchy of the Domain Name System. For example: en.wikipedia.org, <a href="http://www.eff.org">www.eff.org</a>, forum.wordreference.com</p>
 <p>Under “Custom hostname”, input the FQDN of your domain. In this case I will input <code>www.pablodip.me</code>.</p>
-<p><img src="../../mapping-an-apex-domain-to-an-Azure-CDN-endpoint-with-automated-SSL-Certificate-management/31mod.png" alt="31mod.png"></p>
+<p><img src="../../mapping-an-apex-domain-to-an-azure-cdn-endpoint-with-automated-ssl-certificate-management/31mod.png" alt="31mod.png"></p>
 <p>In the overview pane of your endpoint, click on your newly created <strong>custom domain</strong>, then enable HTTPS and save the changes.</p>
-<p><img src="../../mapping-an-apex-domain-to-an-Azure-CDN-endpoint-with-automated-SSL-Certificate-management/33mod.png" alt="33mod.png"></p>
+<p><img src="../../mapping-an-apex-domain-to-an-azure-cdn-endpoint-with-automated-ssl-certificate-management/33mod.png" alt="33mod.png"></p>
 <h4 id="mapping-the-apex-domain-to-azure-cdn">Mapping the apex domain to Azure CDN</h4>
 <p>Now we will map our apex domain. Just as we did before, in the overview pane of our endpoint, click on <strong>Custom domain</strong> and enter your root domain as the value for <strong>Custom hostname</strong>. For example: <code>pablodip.me</code>. It’s not necessary to add &ldquo;@&rdquo; as a subdomain to specify the apex domain.</p>
 <p>Save the changes and rejoice in the knowledge that you are almost done!</p>
@@ -250,13 +250,13 @@ The Let’s Encrypt CA will look at the domain name being requested and issue on
 <p>To create a new certificate, go to the acmebot dashboard and select <strong>Add</strong> on the top-right corner.</p>
 <p>Select your DNS zone and leave the subdomain section empty under <strong>DNS names</strong>. By default, the name of the certificate is the DNS Name with hyphens instead of dots.</p>
 <p>Select the key size that you prefer and click on <strong>Add</strong>.</p>
-<p><img src="../../mapping-an-apex-domain-to-an-Azure-CDN-endpoint-with-automated-SSL-Certificate-management/34.png" alt="34.png"></p>
+<p><img src="../../mapping-an-apex-domain-to-an-azure-cdn-endpoint-with-automated-ssl-certificate-management/34.png" alt="34.png"></p>
 <p>The newly created certificate will appear under “Managed certificates” in your dashboard.</p>
 <p>Back in Azure, go to the overview page of your DNS endpoint and select your apex domain, under “Custom domain HTTPS” select <strong>On</strong>.</p>
 <p>Under &ldquo;Certificate management type&rdquo; select <strong>Use my own certificate</strong>.</p>
 <p>From the drop-down menus select the Key vault that you created to store the certificate, and the certificate you created.</p>
 <p>Under &ldquo;Certificate/Secret version&rdquo; select <strong>Latest</strong>. This will ensure that the certificate used will always be the most recent certificate created by the acmebot.</p>
-<p><img src="../../mapping-an-apex-domain-to-an-Azure-CDN-endpoint-with-automated-SSL-Certificate-management/32mod.png" alt="32mod.png"></p>
+<p><img src="../../mapping-an-apex-domain-to-an-azure-cdn-endpoint-with-automated-ssl-certificate-management/32mod.png" alt="32mod.png"></p>
 <p>To add our certificate, we need to configure the appropriate permissions for Azure CDN to access the Key Vault. To achieve this, we will register Azure CDN as an app in your Azure Active Directory (AAD) using the Azure CLI.</p>
 <p>To log in to Azure, use the following command in your terminal:</p>
 <p><code>az login</code></p>
