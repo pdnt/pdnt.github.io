@@ -9,6 +9,15 @@
     <copyright>&amp;copy; Copyright 2023, Dip Pablo</copyright>
     <lastBuildDate>Sun, 04 Jun 2023 17:13:57 -0300</lastBuildDate><atom:link href="https://pablodip.me/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>Load Balancing and Failover using PCC on RouterOS</title>
+      <link>https://pablodip.me/post/load-balancing-and-fail-over-using-pcc-on-routeros/</link>
+      <pubDate>Thu, 05 Oct 2023 15:17:00 -0300</pubDate>
+      
+      <guid>https://pablodip.me/post/load-balancing-and-fail-over-using-pcc-on-routeros/</guid>
+      <description>Today, I&amp;rsquo;ll demonstrate how to set up a failover-capable load balancer using the PCC (Per Connection Classifier) method, a highly flexible load balancing solution that is straightforward to configure. Since there are a lot of misconceptions about load balancing and the speeds you can achieve, let me clarify that it is not possible to split a network connection in half, route each half through different ISPs, and expect them to magically reunite.</description>
+    </item>
+    
+    <item>
       <title>Mapping an apex domain to an Azure CDN endpoint with automated SSL Certificate management</title>
       <link>https://pablodip.me/post/mapping-an-apex-domain-to-an-azure-cdn-endpoint-with-automated-ssl-certificate-management/</link>
       <pubDate>Fri, 01 Sep 2023 11:11:00 -0300</pubDate>

@@ -3,12 +3,27 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://pablodip.me/categories/azure/</loc>
-    <lastmod>2023-09-01T11:11:00-03:00</lastmod>
+    <loc>https://pablodip.me/categories/</loc>
+    <lastmod>2023-10-05T15:17:00-03:00</lastmod>
   </url>
   
   <url>
-    <loc>https://pablodip.me/categories/</loc>
+    <loc>https://pablodip.me/post/load-balancing-and-fail-over-using-pcc-on-routeros/</loc>
+    <lastmod>2023-10-05T15:17:00-03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pablodip.me/categories/networking/</loc>
+    <lastmod>2023-10-05T15:17:00-03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pablodip.me/post/</loc>
+    <lastmod>2023-10-05T15:17:00-03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pablodip.me/categories/azure/</loc>
     <lastmod>2023-09-01T11:11:00-03:00</lastmod>
   </url>
   
@@ -19,11 +34,6 @@
   
   <url>
     <loc>https://pablodip.me/post/mapping-an-apex-domain-to-an-azure-cdn-endpoint-with-automated-ssl-certificate-management/</loc>
-    <lastmod>2023-09-01T11:11:00-03:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://pablodip.me/post/</loc>
     <lastmod>2023-09-01T11:11:00-03:00</lastmod>
   </url>
   

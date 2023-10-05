@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en-us"><head>
+    <title>Pablo Dip</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="" />
+
+    
+    
+    
+    <link rel="stylesheet" href="../../css/theme.min.css">
+
+    
+    
+    
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'https:\/\/www.googletagmanager.com\/gtag\/js?id=G-36K52CH2JM', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+</head>
+<body>
+        <div id="content" class="mx-auto"><header class="container mt-sm-5 mt-4 mb-4 mt-xs-1">
+    <div class="row">
+        
+        <div class="col-sm-4 col-12 text-sm-right text-center pt-sm-4">
+            <a href="../../" class="text-decoration-none">
+                <img id="home-image" class="rounded-circle"
+                    
+                        
+                            src="../../avatar.jpg"
+                        
+                    
+                />
+            </a>
+        </div>
+        <div class="col-sm-8 col-12 text-sm-left text-center">
+        
+            <h2 class="m-0 mb-2 mt-4">
+                <a href="../../" class="text-decoration-none">
+                    
+                        Pablo Dip
+                    
+                </a>
+            </h2>
+            <p class="text-muted mb-1">
+                
+                    Network Engineer | DevOps and security enthusiast
+                
+            </p>
+            <ul id="nav-links" class="list-inline mb-2">
+                
+                
+                    <li class="list-inline-item">
+                        <a class="badge badge-white " href="../../" title="About">About</a>
+                    </li>
+                
+                    <li class="list-inline-item">
+                        <a class="badge badge-white " href="../../post/" title="Posts">Posts</a>
+                    </li>
+                
+                    <li class="list-inline-item">
+                        <a class="badge badge-white " href="../../categories/" title="Categories">Categories</a>
+                    </li>
+                
+            </ul>
+            <ul id="nav-social" class="list-inline">
+                
+                    <li class="list-inline-item mr-3">
+                        <a href="http://github.com/pdnt" target="_blank">
+                            <i class="fab fa-github fa-1x text-muted"></i>
+                        </a>
+                    </li>
+                
+                    <li class="list-inline-item mr-3">
+                        <a href="https://www.linkedin.com/in/pablo-dip-24b33b1b0/" target="_blank">
+                            <i class="fab fa-linkedin-in fa-1x text-muted"></i>
+                        </a>
+                    </li>
+                
+                    <li class="list-inline-item mr-3">
+                        <a href="mailto:pablodip@protonmail.com" target="_blank">
+                            <i class="fas fa-at fa-1x text-muted"></i>
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+    <hr />
+</header>
+<div class="container">
+    <div class="pl-sm-2">
+        <div class="mb-3">
+            <h3 class="mb-0">Load Balancing and Failover using PCC on RouterOS</h3>
+            
+            <small class="text-muted">Published October 5, 2023</small>
+        </div>
+
+        <article>
+            <p>Today, I&rsquo;ll demonstrate how to set up a failover-capable load balancer using the PCC (Per Connection Classifier) method, a highly flexible load balancing solution that is straightforward to configure.
+Since there are a lot of misconceptions about load balancing and the speeds you can achieve, let me clarify that it is not possible to split a network connection in half, route each half through different ISPs, and expect them to magically reunite. With PCC load balancing, we distribute connections, not bandwidth or segments of connections, among different ISPs. In summary, &lsquo;connection 1&rsquo; will utilize ISP 1, &lsquo;connection 2&rsquo; will leverage ISP 2, and &lsquo;connection 3&rsquo; will be routed through ISP 1.</p>
+<h4 id="what-is-load-balancing"><strong>What is load balancing?</strong></h4>
+<p>Load balancing is the method of efficiently distributing incoming network traffic across a pool of resources.</p>
+<p><img src="../../load-balancing-and-fail-over-using-pcc-on-routeros/loadbalancer1.jpg" alt="loadbalancer1.jpg"></p>
+<p><img src="../../load-balancing-and-fail-over-using-pcc-on-routeros/loadbalancer2.jpg" alt="loadbalancer2.jpg"></p>
+<h4 id="what-is-failover"><strong>What is failover?</strong></h4>
+<p>Failover enables you to set a second upstream connection to your device which will serve as a “backup”. If your primary upstream service goes down, you will begin utilizing your secondary upstream connection.</p>
+<h4 id="what-is-pcc"><strong>What is PCC?</strong></h4>
+<p>PCC (Per connection classifier) will allow you to divide traffic into equal streams with the ability to keep packets with a specific set of options in one particular stream.
+PCC takes selected fields from the IP header, and with the help of a hashing algorithm, converts the selected fields into a 32-bit value. This value then is divided by a specified Denominator and the remainder then is compared to a specified Remainder, if equal then the packet will be captured. You can choose from src-address, dst-address, src-port, dst-port from the header to use in this operation. For example:
+Number of upstream (ISP) interfaces: 2
+Posible results: 0 and 1</p>
+<table>
+<thead>
+<tr>
+<th>Hash n°    </th>
+<th>Hash Value    </th>
+<th>Operation      </th>
+<th>Upstream Interface    </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hash 1</td>
+<td>12321</td>
+<td>12321/2 = 1</td>
+<td>WAN 2</td>
+</tr>
+<tr>
+<td>Hash 2</td>
+<td>6400</td>
+<td>6400/2 = 0</td>
+<td>WAN 1</td>
+</tr>
+<tr>
+<td>Hash 3</td>
+<td>1321</td>
+<td>1321/2 = 1</td>
+<td>WAN 2</td>
+</tr>
+<tr>
+<td>Hash 4</td>
+<td>4398</td>
+<td>4398/2 = 0</td>
+<td>WAN 1</td>
+</tr>
+<tr>
+<td>Hash 5</td>
+<td>5377</td>
+<td>5377/2 = 1</td>
+<td>WAN 2</td>
+</tr>
+</tbody>
+</table>
+<p> </p>
+<p>Number of resulting connections:</p>
+<p>On WAN 1 ⇒ 2</p>
+<p>On WAN 2 ⇒ 3</p>
+<h4 id="setup-overview"><strong><strong>Setup Overview</strong></strong></h4>
+<p>My gateway device (Mikrotik RB2011) has two public network uplinks. I will mark traffic in two parts, one with the name &ldquo;ISP1&rdquo; and the second as &ldquo;ISP2&rdquo; which goes through the ports <code>ether1</code> and <code>ether2</code> accordingly.</p>
+<p><img src="../../load-balancing-and-fail-over-using-pcc-on-routeros/setupfinal.jpg" alt="setupfinal (1).jpg"></p>
+<p>First of all, let&rsquo;s create an implementation plan. When designing a network or modifying configuration, make sure to first make a plan and follow all the steps along the way.</p>
+<p>The approach we&rsquo;re going to adopt:</p>
+<ul>
+<li>IP Addresses
+<ul>
+<li>Configure WAN and LAN IP addresses.</li>
+</ul>
+</li>
+<li>Policy routing
+<ul>
+<li>Add Firewall Mangle rules.</li>
+<li>Mark connections.</li>
+</ul>
+</li>
+<li>Create a NAT rule for outgoing packets</li>
+</ul>
+<h4 id="configuringip-addresses"><strong><strong>Configuring IP Addresses</strong></strong></h4>
+<p>Remember to replace the IP addresses with the addresses provided by your ISPs.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-jsx" data-lang="jsx"><span style="color:#960050;background-color:#1e0010">/ip address</span>
+<span style="color:#a6e22e">add</span> <span style="color:#a6e22e">address</span><span style="color:#f92672">=</span><span style="color:#ae81ff">192.168.100.10</span><span style="color:#f92672">/</span><span style="color:#ae81ff">24</span> <span style="color:#66d9ef">interface</span><span style="color:#f92672">=</span><span style="color:#a6e22e">ether_ISP1</span> <span style="color:#a6e22e">network</span><span style="color:#f92672">=</span><span style="color:#ae81ff">192.168.100.0</span>
+<span style="color:#a6e22e">add</span> <span style="color:#a6e22e">address</span><span style="color:#f92672">=</span><span style="color:#ae81ff">192.168.1.10</span><span style="color:#f92672">/</span><span style="color:#ae81ff">24</span> <span style="color:#66d9ef">interface</span><span style="color:#f92672">=</span><span style="color:#a6e22e">ether_ISP2</span> <span style="color:#a6e22e">network</span><span style="color:#f92672">=</span><span style="color:#ae81ff">192.168.1.0</span>
+<span style="color:#a6e22e">add</span> <span style="color:#a6e22e">address</span><span style="color:#f92672">=</span><span style="color:#ae81ff">192.168.88.1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">24</span> <span style="color:#66d9ef">interface</span><span style="color:#f92672">=</span><span style="color:#a6e22e">ether_LAN</span> <span style="color:#a6e22e">network</span><span style="color:#f92672">=</span><span style="color:#ae81ff">192.168.88.0</span>
+</code></pre></div><p>The router has two upstream (ISP) interfaces with the addresses <code>192.168.100.10/24</code> and <code>192.168.1.10/24</code>. The LAN interface has an IP address of <code>192.168.88.1/24</code>.</p>
+<p>Now let’s add two new <strong>routing tables</strong>, which we will use later:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-jsx" data-lang="jsx"><span style="color:#960050;background-color:#1e0010">/routing table</span>
+<span style="color:#a6e22e">add</span> <span style="color:#a6e22e">disabled</span><span style="color:#f92672">=</span><span style="color:#a6e22e">no</span> <span style="color:#a6e22e">fib</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#a6e22e">ISP1_table</span>
+<span style="color:#a6e22e">add</span> <span style="color:#a6e22e">disabled</span><span style="color:#f92672">=</span><span style="color:#a6e22e">no</span> <span style="color:#a6e22e">fib</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#a6e22e">ISP2_table</span>
+</code></pre></div><p>A Routing Table is an internal table that contains a set of rules, called “routes”, that our gateway uses to determine which router interface to send packets to, based on their destination network addresses.</p>
+<h4 id="policy-routing"><strong>Policy routing</strong></h4>
+<p>Policy routing is a method used to steer traffic matching certain criteria to a certain gateway. This can be used to force some customers or specific protocols from the servers (for example HTTP traffic) to always be routed to a certain gateway. It can even be used to steer local and overseas traffic to different gateways.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-jsx" data-lang="jsx"><span style="color:#960050;background-color:#1e0010">/ip firewall mangle</span>
+<span style="color:#a6e22e">add</span> <span style="color:#a6e22e">action</span><span style="color:#f92672">=</span><span style="color:#a6e22e">accept</span> <span style="color:#a6e22e">chain</span><span style="color:#f92672">=</span><span style="color:#a6e22e">prerouting</span> <span style="color:#a6e22e">dst</span><span style="color:#f92672">-</span><span style="color:#a6e22e">address</span><span style="color:#f92672">=</span><span style="color:#ae81ff">192.168.100.0</span><span style="color:#f92672">/</span><span style="color:#ae81ff">24</span> <span style="color:#66d9ef">in</span><span style="color:#f92672">-</span><span style="color:#66d9ef">interface</span><span style="color:#f92672">=</span><span style="color:#a6e22e">ether_LAN</span>
+<span style="color:#a6e22e">add</span> <span style="color:#a6e22e">action</span><span style="color:#f92672">=</span><span style="color:#a6e22e">accept</span> <span style="color:#a6e22e">chain</span><span style="color:#f92672">=</span><span style="color:#a6e22e">prerouting</span> <span style="color:#a6e22e">dst</span><span style="color:#f92672">-</span><span style="color:#a6e22e">address</span><span style="color:#f92672">=</span><span style="color:#ae81ff">192.168.1.0</span><span style="color:#f92672">/</span><span style="color:#ae81ff">24</span> <span style="color:#66d9ef">in</span><span style="color:#f92672">-</span><span style="color:#66d9ef">interface</span><span style="color:#f92672">=</span><span style="color:#a6e22e">ether_LAN</span>
+</code></pre></div><p>In this scenario, we use policy routing to force all traffic to the specific gateway, even if traffic is destined to the host from the connected networks. This can generate a <strong>routing loop</strong> that will make communications with those hosts impossible. To avoid this, we need to allow usage of the default routing table for traffic to connected networks.</p>
+<blockquote>
+<p>In the simplest version, a routing loop of size two, node A thinks that the path to some destination (call it C) is through its neighboring node, node B. At the same time, node B thinks that the path to C starts at node A.</p>
+<p>Thus, whenever traffic for C arrives at either A or B, it will loop endlessly between A and B, unless some mechanism exists to prevent that behaviour. <a href="https://en.wikipedia.org/wiki/Routing_loop">[1]</a></p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-jsx" data-lang="jsx"><span style="color:#a6e22e">add</span> <span style="color:#a6e22e">action</span><span style="color:#f92672">=</span><span style="color:#a6e22e">mark</span><span style="color:#f92672">-</span><span style="color:#a6e22e">connection</span> <span style="color:#a6e22e">chain</span><span style="color:#f92672">=</span><span style="color:#a6e22e">input</span> <span style="color:#a6e22e">connection</span><span style="color:#f92672">-</span><span style="color:#a6e22e">state</span><span style="color:#f92672">=</span><span style="color:#66d9ef">new</span> <span style="color:#66d9ef">in</span><span style="color:#f92672">-</span><span style="color:#66d9ef">interface</span><span style="color:#f92672">=</span><span style="color:#a6e22e">ether_ISP1</span> <span style="color:#66d9ef">new</span><span style="color:#f92672">-</span><span style="color:#a6e22e">connection</span><span style="color:#f92672">-</span><span style="color:#a6e22e">mark</span><span style="color:#f92672">=</span><span style="color:#a6e22e">ISP1</span>
+<span style="color:#a6e22e">add</span> <span style="color:#a6e22e">action</span><span style="color:#f92672">=</span><span style="color:#a6e22e">mark</span><span style="color:#f92672">-</span><span style="color:#a6e22e">connection</span> <span style="color:#a6e22e">chain</span><span style="color:#f92672">=</span><span style="color:#a6e22e">input</span> <span style="color:#a6e22e">connection</span><span style="color:#f92672">-</span><span style="color:#a6e22e">state</span><span style="color:#f92672">=</span><span style="color:#66d9ef">new</span> <span style="color:#66d9ef">in</span><span style="color:#f92672">-</span><span style="color:#66d9ef">interface</span><span style="color:#f92672">=</span><span style="color:#a6e22e">ether_ISP2</span> <span style="color:#66d9ef">new</span><span style="color:#f92672">-</span><span style="color:#a6e22e">connection</span><span style="color:#f92672">-</span><span style="color:#a6e22e">mark</span><span style="color:#f92672">=</span><span style="color:#a6e22e">ISP2</span>
+ 
+<span style="color:#a6e22e">add</span> <span style="color:#a6e22e">action</span><span style="color:#f92672">=</span><span style="color:#a6e22e">mark</span><span style="color:#f92672">-</span><span style="color:#a6e22e">connection</span> <span style="color:#a6e22e">chain</span><span style="color:#f92672">=</span><span style="color:#a6e22e">output</span> <span style="color:#a6e22e">connection</span><span style="color:#f92672">-</span><span style="color:#a6e22e">mark</span><span style="color:#f92672">=</span><span style="color:#a6e22e">no</span><span style="color:#f92672">-</span><span style="color:#a6e22e">mark</span> <span style="color:#a6e22e">connection</span><span style="color:#f92672">-</span><span style="color:#a6e22e">state</span><span style="color:#f92672">=</span><span style="color:#66d9ef">new</span> <span style="color:#66d9ef">new</span><span style="color:#f92672">-</span><span style="color:#a6e22e">connection</span><span style="color:#f92672">-</span><span style="color:#a6e22e">mark</span><span style="color:#f92672">=</span><span style="color:#a6e22e">ISP1</span> <span style="color:#a6e22e">passthrough</span><span style="color:#f92672">=</span><span style="color:#a6e22e">yes</span> <span style="color:#a6e22e">per</span><span style="color:#f92672">-</span><span style="color:#a6e22e">connection</span><span style="color:#f92672">-</span><span style="color:#a6e22e">classifier</span><span style="color:#f92672">=</span><span style="color:#a6e22e">both</span><span style="color:#f92672">-</span><span style="color:#a6e22e">addresses</span><span style="color:#f92672">:</span><span style="color:#ae81ff">2</span><span style="color:#f92672">/</span><span style="color:#ae81ff">0</span>
+<span style="color:#a6e22e">add</span> <span style="color:#a6e22e">action</span><span style="color:#f92672">=</span><span style="color:#a6e22e">mark</span><span style="color:#f92672">-</span><span style="color:#a6e22e">connection</span> <span style="color:#a6e22e">chain</span><span style="color:#f92672">=</span><span style="color:#a6e22e">output</span> <span style="color:#a6e22e">connection</span><span style="color:#f92672">-</span><span style="color:#a6e22e">mark</span><span style="color:#f92672">=</span><span style="color:#a6e22e">no</span><span style="color:#f92672">-</span><span style="color:#a6e22e">mark</span> <span style="color:#a6e22e">connection</span><span style="color:#f92672">-</span><span style="color:#a6e22e">state</span><span style="color:#f92672">=</span><span style="color:#66d9ef">new</span> <span style="color:#66d9ef">new</span><span style="color:#f92672">-</span><span style="color:#a6e22e">connection</span><span style="color:#f92672">-</span><span style="color:#a6e22e">mark</span><span style="color:#f92672">=</span><span style="color:#a6e22e">ISP2</span> <span style="color:#a6e22e">per</span><span style="color:#f92672">-</span><span style="color:#a6e22e">connection</span><span style="color:#f92672">-</span><span style="color:#a6e22e">classifier</span><span style="color:#f92672">=</span><span style="color:#a6e22e">both</span><span style="color:#f92672">-</span><span style="color:#a6e22e">addresses</span><span style="color:#f92672">:</span><span style="color:#ae81ff">2</span><span style="color:#f92672">/</span><span style="color:#ae81ff">1</span>
+</code></pre></div><p>It’s necessary to manage the connection initiated from outside our network. The replies must leave via the same interface (Public IP) where the request came from. We will mark all new incoming connections, to associate them to an interface.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-jsx" data-lang="jsx"><span style="color:#a6e22e">add</span> <span style="color:#a6e22e">action</span><span style="color:#f92672">=</span><span style="color:#a6e22e">mark</span><span style="color:#f92672">-</span><span style="color:#a6e22e">connection</span> <span style="color:#a6e22e">chain</span><span style="color:#f92672">=</span><span style="color:#a6e22e">prerouting</span> <span style="color:#a6e22e">connection</span><span style="color:#f92672">-</span><span style="color:#a6e22e">mark</span><span style="color:#f92672">=</span><span style="color:#a6e22e">no</span><span style="color:#f92672">-</span><span style="color:#a6e22e">mark</span> <span style="color:#a6e22e">connection</span><span style="color:#f92672">-</span><span style="color:#a6e22e">state</span><span style="color:#f92672">=</span><span style="color:#66d9ef">new</span> <span style="color:#a6e22e">dst</span><span style="color:#f92672">-</span><span style="color:#a6e22e">address</span><span style="color:#f92672">-</span><span style="color:#a6e22e">type</span><span style="color:#f92672">=!</span><span style="color:#a6e22e">local</span> <span style="color:#66d9ef">in</span><span style="color:#f92672">-</span><span style="color:#66d9ef">interface</span><span style="color:#f92672">=</span><span style="color:#a6e22e">ether_LAN</span> <span style="color:#66d9ef">new</span><span style="color:#f92672">-</span><span style="color:#a6e22e">connection</span><span style="color:#f92672">-</span><span style="color:#a6e22e">mark</span><span style="color:#f92672">=</span><span style="color:#a6e22e">ISP1</span> <span style="color:#a6e22e">per</span><span style="color:#f92672">-</span><span style="color:#a6e22e">connection</span><span style="color:#f92672">-</span><span style="color:#a6e22e">classifier</span><span style="color:#f92672">=</span><span style="color:#a6e22e">both</span><span style="color:#f92672">-</span><span style="color:#a6e22e">addresses</span><span style="color:#f92672">:</span><span style="color:#ae81ff">2</span><span style="color:#f92672">/</span><span style="color:#ae81ff">0</span>
+<span style="color:#a6e22e">add</span> <span style="color:#a6e22e">action</span><span style="color:#f92672">=</span><span style="color:#a6e22e">mark</span><span style="color:#f92672">-</span><span style="color:#a6e22e">connection</span> <span style="color:#a6e22e">chain</span><span style="color:#f92672">=</span><span style="color:#a6e22e">prerouting</span> <span style="color:#a6e22e">connection</span><span style="color:#f92672">-</span><span style="color:#a6e22e">mark</span><span style="color:#f92672">=</span><span style="color:#a6e22e">no</span><span style="color:#f92672">-</span><span style="color:#a6e22e">mark</span> <span style="color:#a6e22e">connection</span><span style="color:#f92672">-</span><span style="color:#a6e22e">state</span><span style="color:#f92672">=</span><span style="color:#66d9ef">new</span> <span style="color:#a6e22e">dst</span><span style="color:#f92672">-</span><span style="color:#a6e22e">address</span><span style="color:#f92672">-</span><span style="color:#a6e22e">type</span><span style="color:#f92672">=!</span><span style="color:#a6e22e">local</span> <span style="color:#66d9ef">in</span><span style="color:#f92672">-</span><span style="color:#66d9ef">interface</span><span style="color:#f92672">=</span><span style="color:#a6e22e">ether_LAN</span> <span style="color:#66d9ef">new</span><span style="color:#f92672">-</span><span style="color:#a6e22e">connection</span><span style="color:#f92672">-</span><span style="color:#a6e22e">mark</span><span style="color:#f92672">=</span><span style="color:#a6e22e">ISP2</span> <span style="color:#a6e22e">per</span><span style="color:#f92672">-</span><span style="color:#a6e22e">connection</span><span style="color:#f92672">-</span><span style="color:#a6e22e">classifier</span><span style="color:#f92672">=</span><span style="color:#a6e22e">both</span><span style="color:#f92672">-</span><span style="color:#a6e22e">addresses</span><span style="color:#f92672">:</span><span style="color:#ae81ff">2</span><span style="color:#f92672">/</span><span style="color:#ae81ff">1</span>
+</code></pre></div><p>Mark-routing can only be used in mangle chain output and prerouting, but mangle chain prerouting captures all traffic that is going to the router itself. To circumvent this issue we will use <code>dst-address-type=!local</code>. With the help of the new PCC, we will divide traffic into two groups based on source and destination addresses.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-jsx" data-lang="jsx"><span style="color:#a6e22e">add</span> <span style="color:#a6e22e">action</span><span style="color:#f92672">=</span><span style="color:#a6e22e">mark</span><span style="color:#f92672">-</span><span style="color:#a6e22e">routing</span> <span style="color:#a6e22e">chain</span><span style="color:#f92672">=</span><span style="color:#a6e22e">output</span> <span style="color:#a6e22e">connection</span><span style="color:#f92672">-</span><span style="color:#a6e22e">mark</span><span style="color:#f92672">=</span><span style="color:#a6e22e">ISP1</span> <span style="color:#66d9ef">new</span><span style="color:#f92672">-</span><span style="color:#a6e22e">routing</span><span style="color:#f92672">-</span><span style="color:#a6e22e">mark</span><span style="color:#f92672">=</span><span style="color:#a6e22e">ISP1_table</span>
+<span style="color:#a6e22e">add</span> <span style="color:#a6e22e">action</span><span style="color:#f92672">=</span><span style="color:#a6e22e">mark</span><span style="color:#f92672">-</span><span style="color:#a6e22e">routing</span> <span style="color:#a6e22e">chain</span><span style="color:#f92672">=</span><span style="color:#a6e22e">prerouting</span> <span style="color:#a6e22e">connection</span><span style="color:#f92672">-</span><span style="color:#a6e22e">mark</span><span style="color:#f92672">=</span><span style="color:#a6e22e">ISP1</span> <span style="color:#66d9ef">in</span><span style="color:#f92672">-</span><span style="color:#66d9ef">interface</span><span style="color:#f92672">=</span><span style="color:#a6e22e">ether_LAN</span> <span style="color:#66d9ef">new</span><span style="color:#f92672">-</span><span style="color:#a6e22e">routing</span><span style="color:#f92672">-</span><span style="color:#a6e22e">mark</span><span style="color:#f92672">=</span><span style="color:#a6e22e">ISP1_table</span>
+ 
+<span style="color:#a6e22e">add</span> <span style="color:#a6e22e">action</span><span style="color:#f92672">=</span><span style="color:#a6e22e">mark</span><span style="color:#f92672">-</span><span style="color:#a6e22e">routing</span> <span style="color:#a6e22e">chain</span><span style="color:#f92672">=</span><span style="color:#a6e22e">output</span> <span style="color:#a6e22e">connection</span><span style="color:#f92672">-</span><span style="color:#a6e22e">mark</span><span style="color:#f92672">=</span><span style="color:#a6e22e">ISP2</span> <span style="color:#66d9ef">new</span><span style="color:#f92672">-</span><span style="color:#a6e22e">routing</span><span style="color:#f92672">-</span><span style="color:#a6e22e">mark</span><span style="color:#f92672">=</span><span style="color:#a6e22e">ISP2_table</span>
+<span style="color:#a6e22e">add</span> <span style="color:#a6e22e">action</span><span style="color:#f92672">=</span><span style="color:#a6e22e">mark</span><span style="color:#f92672">-</span><span style="color:#a6e22e">routing</span> <span style="color:#a6e22e">chain</span><span style="color:#f92672">=</span><span style="color:#a6e22e">prerouting</span> <span style="color:#a6e22e">connection</span><span style="color:#f92672">-</span><span style="color:#a6e22e">mark</span><span style="color:#f92672">=</span><span style="color:#a6e22e">ISP2</span> <span style="color:#66d9ef">in</span><span style="color:#f92672">-</span><span style="color:#66d9ef">interface</span><span style="color:#f92672">=</span><span style="color:#a6e22e">ether_LAN</span> <span style="color:#66d9ef">new</span><span style="color:#f92672">-</span><span style="color:#a6e22e">routing</span><span style="color:#f92672">-</span><span style="color:#a6e22e">mark</span><span style="color:#f92672">=</span><span style="color:#a6e22e">ISP2_table</span>
+</code></pre></div><p>Then, we need to mark all packets from those connections with a proper mark. As policy routing is required only for traffic going to the Internet, do not forget to specify the <code>in-interface</code> option.</p>
+<p>To enable failover, it’s necessary to have routes that will jump in as soon as others become inactive on gateway failure. To ensure this happens, we make sure that the <code>check-gateway</code> option is active</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-jsx" data-lang="jsx"><span style="color:#960050;background-color:#1e0010">/ip route</span>
+<span style="color:#a6e22e">add</span> <span style="color:#a6e22e">check</span><span style="color:#f92672">-</span><span style="color:#a6e22e">gateway</span><span style="color:#f92672">=</span><span style="color:#a6e22e">ping</span> <span style="color:#a6e22e">disabled</span><span style="color:#f92672">=</span><span style="color:#a6e22e">no</span> <span style="color:#a6e22e">dst</span><span style="color:#f92672">-</span><span style="color:#a6e22e">address</span><span style="color:#f92672">=</span><span style="color:#ae81ff">0.0.0.0</span><span style="color:#f92672">/</span><span style="color:#ae81ff">0</span> <span style="color:#a6e22e">gateway</span><span style="color:#f92672">=</span><span style="color:#ae81ff">192.168.100.1</span> <span style="color:#a6e22e">routing</span><span style="color:#f92672">-</span><span style="color:#a6e22e">table</span><span style="color:#f92672">=</span><span style="color:#a6e22e">ISP1_table</span> <span style="color:#a6e22e">suppress</span><span style="color:#f92672">-</span><span style="color:#a6e22e">hw</span><span style="color:#f92672">-</span><span style="color:#a6e22e">offload</span><span style="color:#f92672">=</span><span style="color:#a6e22e">no</span>
+<span style="color:#a6e22e">add</span> <span style="color:#a6e22e">check</span><span style="color:#f92672">-</span><span style="color:#a6e22e">gateway</span><span style="color:#f92672">=</span><span style="color:#a6e22e">ping</span> <span style="color:#a6e22e">disabled</span><span style="color:#f92672">=</span><span style="color:#a6e22e">no</span> <span style="color:#a6e22e">dst</span><span style="color:#f92672">-</span><span style="color:#a6e22e">address</span><span style="color:#f92672">=</span><span style="color:#ae81ff">0.0.0.0</span><span style="color:#f92672">/</span><span style="color:#ae81ff">0</span> <span style="color:#a6e22e">gateway</span><span style="color:#f92672">=</span><span style="color:#ae81ff">192.168.1.1</span> <span style="color:#a6e22e">routing</span><span style="color:#f92672">-</span><span style="color:#a6e22e">table</span><span style="color:#f92672">=</span><span style="color:#a6e22e">ISP2_table</span> <span style="color:#a6e22e">suppress</span><span style="color:#f92672">-</span><span style="color:#a6e22e">hw</span><span style="color:#f92672">-</span><span style="color:#a6e22e">offload</span><span style="color:#f92672">=</span><span style="color:#a6e22e">no</span>
+</code></pre></div><p>Now, create a route for each routing-mark:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-jsx" data-lang="jsx"><span style="color:#a6e22e">add</span> <span style="color:#a6e22e">distance</span><span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> <span style="color:#a6e22e">dst</span><span style="color:#f92672">-</span><span style="color:#a6e22e">address</span><span style="color:#f92672">=</span><span style="color:#ae81ff">0.0.0.0</span><span style="color:#f92672">/</span><span style="color:#ae81ff">0</span> <span style="color:#a6e22e">gateway</span><span style="color:#f92672">=</span><span style="color:#ae81ff">192.168.100.1</span>
+<span style="color:#a6e22e">add</span> <span style="color:#a6e22e">distance</span><span style="color:#f92672">=</span><span style="color:#ae81ff">2</span> <span style="color:#a6e22e">dst</span><span style="color:#f92672">-</span><span style="color:#a6e22e">address</span><span style="color:#f92672">=</span><span style="color:#ae81ff">0.0.0.0</span><span style="color:#f92672">/</span><span style="color:#ae81ff">0</span> <span style="color:#a6e22e">gateway</span><span style="color:#f92672">=</span><span style="color:#ae81ff">192.168.1.1</span>
+</code></pre></div><h4 id="nat">NAT</h4>
+<blockquote>
+<p>Network Address Translation is an Internet standard that allows hosts on local area networks to use one set of IP addresses for internal communications and another set of IP addresses for external communications. A LAN that uses NAT is described as a natted network. For NAT to function, there should be a NAT gateway in each natted network. The NAT gateway (NAT router) performs IP address rewriting on the way packets travel from/to LAN. <a href="https://help.mikrotik.com/docs/display/ROS/NAT">[2]</a></p>
+</blockquote>
+<p>Since a routing decision has already been made, we only need rules that will fix src-addresses for all outgoing packets. If a packet leaves via <code>ether_ISP1</code>, it will be NATed to <code>192.168.100.10</code>, if it leaves via <code>ether_ISP2</code> then it will be NATed to <code>192.168.1.10</code>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-jsx" data-lang="jsx"><span style="color:#960050;background-color:#1e0010">/ip firewall nat</span>
+<span style="color:#a6e22e">add</span> <span style="color:#a6e22e">action</span><span style="color:#f92672">=</span><span style="color:#a6e22e">masquerade</span> <span style="color:#a6e22e">chain</span><span style="color:#f92672">=</span><span style="color:#a6e22e">srcnat</span> <span style="color:#a6e22e">out</span><span style="color:#f92672">-</span><span style="color:#66d9ef">interface</span><span style="color:#f92672">=</span><span style="color:#a6e22e">ether_ISP1</span>
+<span style="color:#a6e22e">add</span> <span style="color:#a6e22e">action</span><span style="color:#f92672">=</span><span style="color:#a6e22e">masquerade</span> <span style="color:#a6e22e">chain</span><span style="color:#f92672">=</span><span style="color:#a6e22e">srcnat</span> <span style="color:#a6e22e">out</span><span style="color:#f92672">-</span><span style="color:#66d9ef">interface</span><span style="color:#f92672">=</span><span style="color:#a6e22e">ether_ISP2</span>
+</code></pre></div><p> </p>
+<p>Setting up a failover-capable load balancer using the PCC method is a powerful way to ensure network reliability and efficient distribution of traffic. Take into consideration the limitations of your hardware; although you can implement this configuration on Mikrotik devices with any speed provided by your ISPs, you might encounter a hardware bottleneck.</p>
+<p> </p>
+<p> </p>
+
+        </article>
+    </div>
+
+    
+
+            </div>
+        </div><footer class="text-center pb-1">
+    <small class="text-muted">
+        
+            &copy; Copyright 2023, Dip Pablo
+        
+        <br>
+        Powered by <a href="https://gohugo.io/" target="_blank">Hugo</a>
+        and <a href="https://github.com/austingebauer/devise" target="_blank">Devise</a>
+    </small>
+</footer>
+</body>
+</html>

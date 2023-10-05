@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Networking on Pablo Dip</title>
+    <link>https://pablodip.me/categories/networking/</link>
+    <description>Recent content in Networking on Pablo Dip</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; Copyright 2023, Dip Pablo</copyright>
+    <lastBuildDate>Thu, 05 Oct 2023 15:17:00 -0300</lastBuildDate><atom:link href="https://pablodip.me/categories/networking/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Load Balancing and Failover using PCC on RouterOS</title>
+      <link>https://pablodip.me/post/load-balancing-and-fail-over-using-pcc-on-routeros/</link>
+      <pubDate>Thu, 05 Oct 2023 15:17:00 -0300</pubDate>
+      
+      <guid>https://pablodip.me/post/load-balancing-and-fail-over-using-pcc-on-routeros/</guid>
+      <description>Today, I&amp;rsquo;ll demonstrate how to set up a failover-capable load balancer using the PCC (Per Connection Classifier) method, a highly flexible load balancing solution that is straightforward to configure. Since there are a lot of misconceptions about load balancing and the speeds you can achieve, let me clarify that it is not possible to split a network connection in half, route each half through different ISPs, and expect them to magically reunite.</description>
+    </item>
+    
+  </channel>
+</rss>
