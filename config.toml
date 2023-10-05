@@ -35,7 +35,7 @@ copyright = "&copy; Copyright 2023, Dip Pablo"
   header_title = "Pablo Dip"                 # Your header title
   header_subtitle = "Network Engineer | DevOps and security enthusiast" # Your header subtitle
   home_image = "/avatar.jpg"          # Path to header image starting from the static directory
-  recent_posts = 5                           # Max amount of recent posts to show
+  recent_posts = 10                           # Max amount of recent posts to show
   mainSections = ["posts", "post", "blog"]   # Main sections to include in recent posts
   [params.style]                             # CSS style overrides
     backgroundColor = "#f8f9fa"
