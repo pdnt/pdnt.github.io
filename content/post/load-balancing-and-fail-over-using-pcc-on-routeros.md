@@ -23,7 +23,9 @@ Failover enables you to set a second upstream connection to your device which wi
 
 PCC (Per connection classifier) will allow you to divide traffic into equal streams with the ability to keep packets with a specific set of options in one particular stream.
 PCC takes selected fields from the IP header, and with the help of a hashing algorithm, converts the selected fields into a 32-bit value. This value then is divided by a specified Denominator and the remainder then is compared to a specified Remainder, if equal then the packet will be captured. You can choose from src-address, dst-address, src-port, dst-port from the header to use in this operation. For example:
+
 Number of upstream (ISP) interfaces: 2
+
 Posible results: 0 and 1
 
 | Hash n° &nbsp; &nbsp; | Hash Value &nbsp; &nbsp; | Operation &nbsp; &nbsp; &nbsp; | Upstream Interface &nbsp; &nbsp; |
