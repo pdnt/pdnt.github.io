@@ -59,7 +59,9 @@ The approach we're going to adopt:
 - Policy routing
     - Add Firewall Mangle rules.
     - Mark connections.
-- Create a NAT rule for outgoing packets
+- NAT (Network Address Translation)
+	- Create a NAT rule for outgoing packets
+
 
 #### ****Configuring IP Addresses****
 
