@@ -15,19 +15,6 @@
     
 
     
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-	ga('create', 'https:\/\/www.googletagmanager.com\/gtag\/js?id=G-36K52CH2JM', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-
 </head>
 <body>
         <div id="content" class="mx-auto"><header class="container mt-sm-5 mt-4 mb-4 mt-xs-1">
@@ -55,7 +42,7 @@ if (!doNotTrack) {
             </h2>
             <p class="text-muted mb-1">
                 
-                    System Administrator | DevOps and security enthusiast
+                    DevOps &amp; DevSecOps | Azure Certified x3 | Multi-cloud
                 
             </p>
             <ul id="nav-links" class="list-inline mb-2">
@@ -83,7 +70,7 @@ if (!doNotTrack) {
                     </li>
                 
                     <li class="list-inline-item mr-3">
-                        <a href="https://www.linkedin.com/in/pablo-dip-24b33b1b0/" target="_blank">
+                        <a href="https://www.linkedin.com/in/pablo-dip" target="_blank">
                             <i class="fab fa-linkedin-in fa-1x text-muted"></i>
                         </a>
                     </li>
@@ -113,22 +100,22 @@ To install proxmox over an encrypted drive we need to install Debian 11 first, c
 <h2 id="installing-debian-11-bullseye">Installing Debian 11 (Bullseye)</h2>
 <p>Download Debian from the official website <a href="https://www.debian.org/download">https://www.debian.org/download</a>, along with the SHA512SUMS and the Signature.</p>
 <p>Generate a checksum for the ISO file and save it:
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sha512sum debian-11.7.0-amd64-netinst.iso &gt;&gt; debianHash.txt</code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sha512sum debian-11.7.0-amd64-netinst.iso &gt;&gt; debianHash.txt</span></span></code></pre></div></p>
 <p>Verify the integrity of the ISO file by comparing the checksums using diff:
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">diff SHA512SUM.txt debianHash.txt</code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>diff SHA512SUM.txt debianHash.txt</span></span></code></pre></div></p>
 <p>If the checksums are equal no output will be displayed. If the files differ, you will see this message prompted:</p>
-<pre><code>Files SHA512SUM.txt and debianHash differ
+<pre tabindex="0"><code>Files SHA512SUM.txt and debianHash differ
 </code></pre><p>If the checksum value you calculated is even slightly different from the checksum value of the original file, that means that the file was corrupted or tampered with by a third party, such as in the case of malware.</p>
 <p>To verify the authenticity of the SHA512SUM.txt file we need the signing key.</p>
 <p>Import the signing key
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">gpg --keyserver keyring.debian.org --recv-keys &lt;input the key id here&gt;</code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>gpg --keyserver keyring.debian.org --recv-keys &lt;input the key id here&gt;</span></span></code></pre></div></p>
 <p>You can get the key id from <a href="https://www.debian.org/CD/verify">https://www.debian.org/CD/verify</a></p>
 <p>Now you can verify the checksum:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">gpg --verify SHA512SUMS.sign SHA512SUMS.txt </code></pre></div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>gpg --verify SHA512SUMS.sign SHA512SUMS.txt </span></span></code></pre></div>
 <p>The output will look like this:</p>
-<pre><code>gpg: Signature made Sat 29 Apr 2023 05:48:07 PM -03
+<pre tabindex="0"><code>gpg: Signature made Sat 29 Apr 2023 05:48:07 PM -03
 gpg: using RSA key DF9B9C49EAA9298432589D76DA87E80D6294BE9B
-gpg: Good signature from &quot;Debian CD signing key &lt;debian-cd@lists.debian.org&gt;&quot; [unknown]
+gpg: Good signature from &#34;Debian CD signing key &lt;debian-cd@lists.debian.org&gt;&#34; [unknown]
 gpg: WARNING: This key is not certified with a trusted signature!
 gpg: There is no indication that the signature belongs to the owner.
 Primary key fingerprint: DF9B 9C49 EAA9 2984 3258  9D76 DA87 E80D 6294 BE9B
@@ -136,8 +123,8 @@ Primary key fingerprint: DF9B 9C49 EAA9 2984 3258  9D76 DA87 E80D 6294 BE9B
 GPG might warn you that the Debian signature is not trusted by your computer. This is expected and perfectly normal.</p>
 <h3 id="making-a-bootable-usb-drive">Making a bootable USB drive</h3>
 <p>Insert your USB stick and run the <code>lsblk</code> command to list all the available block devices.
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">lsblk</code></pre></div></p>
-<pre><code>sda                     8:0    0 232.9G  0 disk  
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>lsblk</span></span></code></pre></div></p>
+<pre tabindex="0"><code>sda                     8:0    0 232.9G  0 disk  
 ├─sda1                  8:1    0   512M  0 part  /boot/efi
 ├─sda2                  8:2    0   732M  0 part  /boot
 └─sda3                  8:3    0 231.7G  0 part  
@@ -146,9 +133,8 @@ GPG might warn you that the Debian signature is not trusted by your computer. Th
 sdb                     8:16   0 223.6G  0 disk  
 sdd                     8:80   1  14.4G  0 disk  
 └─sdd1                  8:81   1  14.4G  0 part  
-
 </code></pre><p>Use the <code>dd</code> command to create a bootable USB image from the ISO file:
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo dd <span style="color:#66d9ef">if</span><span style="color:#f92672">=</span>debian-11.7.0-amd64-netinst.iso of<span style="color:#f92672">=</span>/dev/sdd bs<span style="color:#f92672">=</span>1M status<span style="color:#f92672">=</span>progress</code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo dd <span style="color:#66d9ef">if</span><span style="color:#f92672">=</span>debian-11.7.0-amd64-netinst.iso of<span style="color:#f92672">=</span>/dev/sdd bs<span style="color:#f92672">=</span>1M status<span style="color:#f92672">=</span>progress</span></span></code></pre></div></p>
 <p><strong>if=debian-11.7.0-amd64-netinst.iso:</strong> Path to input file.</p>
 <p><strong>of=/dev/sdd:</strong> Path to destination USB disk/stick.</p>
 <p><strong>bs=1M:</strong>  sets the blocksize, for example, bs=1M would be 1MiB blocksize.</p>
@@ -159,7 +145,7 @@ sdd                     8:80   1  14.4G  0 disk
 <h3 id="configure-networking">Configure Networking</h3>
 <p>To use proxmox, we must set a static ip and the hostname must be mapped to the IP address in the host file.
 Set the static IP address by changing &ldquo;dhcp&rdquo; to &ldquo;static&rdquo; in <code>/etc/network/interfaces</code> and add the IP address, netmask, and gateway for the server.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">nano /etc/network/interfaces</code></pre></div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nano /etc/network/interfaces</span></span></code></pre></div>
 <p><img src="../../confignovmbr0.png" alt="config"></p>
 <p>A vmbr interface is needed to connect guests to the underlying physical network. They are a Linux bridge that can be thought of as a virtual switch to which the guests and physical interfaces are connected to.</p>
 <p>Create a Linux Bridge called <code>vmbr0</code>, and add your first network interface to it. If you have trouble configuring the Bridge, you can use the GUI to do so once proxmox packages are installed.
@@ -171,26 +157,26 @@ Set the static IP address by changing &ldquo;dhcp&rdquo; to &ldquo;static&rdquo;
 <p>For instance, if your IP address is <code>192.168.88.249</code>, and your hostname <code>pveserver</code>, then your <code>/etc/hosts</code> file could look like this:</p>
 <p><img src="../../hosts.png" alt="hosts"></p>
 <p>Reload the network configuration by rebooting the network interface:
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ifdown eno1
-ifup eno1</code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ifdown eno1
+</span></span><span style="display:flex;"><span>ifup eno1</span></span></code></pre></div></p>
 <p>Verify that your ip address is the one you chose:
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ip a</code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ip a</span></span></code></pre></div></p>
 <h2 id="install-proxmox-ve">Install Proxmox VE</h2>
 <p>Add the Proxmox VE repository:
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">echo <span style="color:#e6db74">&#34;deb [arch=amd64] http://download.proxmox.com/debian/pve bullseye pve-no-subscription&#34;</span> &gt; /etc/apt/sources.list.d/pve-install-repo.list</code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;deb [arch=amd64] http://download.proxmox.com/debian/pve bullseye pve-no-subscription&#34;</span> &gt; /etc/apt/sources.list.d/pve-install-repo.list</span></span></code></pre></div></p>
 <p>Add the Proxmox VE repository key as root (or use sudo):
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">wget https://download.proxmox.com/debian/proxmox-release-bullseye.gpg -O /etc/apt/trusted.gpg.d/proxmox-release-bullseye.gpg </code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>wget https://download.proxmox.com/debian/proxmox-release-bullseye.gpg -O /etc/apt/trusted.gpg.d/proxmox-release-bullseye.gpg </span></span></code></pre></div></p>
 <p>Verify:
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sha512sum /etc/apt/trusted.gpg.d/proxmox-release-bullseye.gpg </code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sha512sum /etc/apt/trusted.gpg.d/proxmox-release-bullseye.gpg </span></span></code></pre></div></p>
 <p>Update your repository and system by running:
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">apt update <span style="color:#f92672">&amp;&amp;</span> apt full-upgrade</code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>apt update <span style="color:#f92672">&amp;&amp;</span> apt full-upgrade</span></span></code></pre></div></p>
 <p>Install the Proxmox VE packages:
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">apt install proxmox-ve postfix open-iscsi</code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>apt install proxmox-ve postfix open-iscsi</span></span></code></pre></div></p>
 <p>Configure packages that require user input on installation according to your needs.</p>
 <p>Remove the os-prober Package:</p>
 <p>The os-prober package scans all the partitions of your host to create dual-boot GRUB entries. But the scanned partitions can also include those assigned to virtual machines, which one doesn&rsquo;t want to add as boot entry.
 If you didn&rsquo;t install Proxmox VE as dual boot beside another OS, you can safely remove the os-prober package:
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">apt remove os-prober</code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>apt remove os-prober</span></span></code></pre></div></p>
 <p>And now you have an encrypted proxmox server. If you use external storage with your proxmox server, you may also be interested in <a href="https://pablodip.me/post/encrypted-external-storage/">encrypting it to ensure the confidentiality and integrity of your data.</a></p>
 
         </article>

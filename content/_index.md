@@ -16,7 +16,7 @@ My journey is characterized by continuous growth and a commitment to staying upd
 ### Contact
 
 You can reach me by email at [pablodip@protonmail.com](mailto:pablodip@protonmail.com).
-You can also connect with me on [LinkedIn](https://www.linkedin.com/in/pablo-dip-24b33b1b0/) and [GitHub](https://github.com/pdnt).
+You can also connect with me on [LinkedIn](https://www.linkedin.com/in/pablo-dip) and [GitHub](https://github.com/pdnt).
 
 &nbsp;
 

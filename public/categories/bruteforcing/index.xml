@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Bruteforcing on Pablo Dip</title>
-    <link>https://pablodip.me/categories/bruteforcing/</link>
+    <link>https://www.dippablo.com/categories/bruteforcing/</link>
     <description>Recent content in Bruteforcing on Pablo Dip</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; Copyright 2023, Dip Pablo</copyright>
-    <lastBuildDate>Sun, 04 Jun 2023 16:16:39 -0300</lastBuildDate><atom:link href="https://pablodip.me/categories/bruteforcing/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 04 Jun 2023 16:16:39 -0300</lastBuildDate><atom:link href="https://www.dippablo.com/categories/bruteforcing/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Bruteforcing a fully encrypted LVM drive</title>
-      <link>https://pablodip.me/post/bruteforcing-luks/</link>
+      <link>https://www.dippablo.com/post/bruteforcing-luks/</link>
       <pubDate>Sun, 04 Jun 2023 16:16:39 -0300</pubDate>
       
-      <guid>https://pablodip.me/post/bruteforcing-luks/</guid>
+      <guid>https://www.dippablo.com/post/bruteforcing-luks/</guid>
       <description>One of the most crucial lessons that security professionals and enthusiasts must grasp is that security policies should be tailored to a business&amp;rsquo;s needs, and realistic goals should be set for their implementation. I learned this lesson many years ago by forgetting the last 4 chars of my 45-character-long password.
 Back in 2014, &amp;ldquo;No Place to Hide&amp;rdquo; by Glenn Greenwald had just come out, and the side effect of reading it in a couple of days is a bit of paranoia.</description>
     </item>

@@ -1,103 +1,63 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  
   <url>
-    <loc>https://pablodip.me/categories/</loc>
+    <loc>https://www.dippablo.com/categories/</loc>
     <lastmod>2023-10-05T15:17:00-03:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://pablodip.me/post/load-balancing-and-fail-over-using-pcc-on-routeros/</loc>
+  </url><url>
+    <loc>https://www.dippablo.com/post/load-balancing-and-fail-over-using-pcc-on-routeros/</loc>
     <lastmod>2023-10-05T15:17:00-03:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://pablodip.me/categories/networking/</loc>
+  </url><url>
+    <loc>https://www.dippablo.com/categories/networking/</loc>
     <lastmod>2023-10-05T15:17:00-03:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://pablodip.me/post/</loc>
+  </url><url>
+    <loc>https://www.dippablo.com/post/</loc>
     <lastmod>2023-10-05T15:17:00-03:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://pablodip.me/categories/azure/</loc>
+  </url><url>
+    <loc>https://www.dippablo.com/categories/azure/</loc>
     <lastmod>2023-09-01T11:11:00-03:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://pablodip.me/categories/devops/</loc>
+  </url><url>
+    <loc>https://www.dippablo.com/categories/devops/</loc>
     <lastmod>2023-09-01T11:11:00-03:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://pablodip.me/post/mapping-an-apex-domain-to-an-azure-cdn-endpoint-with-automated-ssl-certificate-management/</loc>
+  </url><url>
+    <loc>https://www.dippablo.com/post/mapping-an-apex-domain-to-an-azure-cdn-endpoint-with-automated-ssl-certificate-management/</loc>
     <lastmod>2023-09-01T11:11:00-03:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://pablodip.me/post/hosting-hugo-sites-in-azure-storage-containers-and-azure-cdn/</loc>
+  </url><url>
+    <loc>https://www.dippablo.com/post/hosting-hugo-sites-in-azure-storage-containers-and-azure-cdn/</loc>
     <lastmod>2023-08-17T15:23:30-03:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://pablodip.me/post/deployment-counter/</loc>
+  </url><url>
+    <loc>https://www.dippablo.com/post/deployment-counter/</loc>
     <lastmod>2023-08-03T16:16:39-03:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://pablodip.me/categories/cryptography/</loc>
+  </url><url>
+    <loc>https://www.dippablo.com/categories/cryptography/</loc>
     <lastmod>2023-07-06T14:55:04-03:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://pablodip.me/categories/cybersecurity/</loc>
+  </url><url>
+    <loc>https://www.dippablo.com/categories/cybersecurity/</loc>
     <lastmod>2023-07-06T14:55:04-03:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://pablodip.me/post/encrypted-external-storage/</loc>
+  </url><url>
+    <loc>https://www.dippablo.com/post/encrypted-external-storage/</loc>
     <lastmod>2023-07-06T14:55:04-03:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://pablodip.me/post/encrypted-proxmox/</loc>
+  </url><url>
+    <loc>https://www.dippablo.com/post/encrypted-proxmox/</loc>
     <lastmod>2023-06-06T16:46:34-03:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://pablodip.me/</loc>
+  </url><url>
+    <loc>https://www.dippablo.com/</loc>
     <lastmod>2023-06-04T17:13:57-03:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://pablodip.me/about/</loc>
+  </url><url>
+    <loc>https://www.dippablo.com/about/</loc>
     <lastmod>2023-06-04T17:13:57-03:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://pablodip.me/categories/bruteforcing/</loc>
+  </url><url>
+    <loc>https://www.dippablo.com/categories/bruteforcing/</loc>
     <lastmod>2023-06-04T16:16:39-03:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://pablodip.me/post/bruteforcing-luks/</loc>
+  </url><url>
+    <loc>https://www.dippablo.com/post/bruteforcing-luks/</loc>
     <lastmod>2023-06-04T16:16:39-03:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://pablodip.me/categories/infosec/</loc>
+  </url><url>
+    <loc>https://www.dippablo.com/categories/infosec/</loc>
     <lastmod>2023-06-04T16:16:39-03:00</lastmod>
+  </url><url>
+    <loc>https://www.dippablo.com/categories/ci/cd/</loc>
+  </url><url>
+    <loc>https://www.dippablo.com/tags/</loc>
   </url>
-  
-  <url>
-    <loc>https://pablodip.me/categories/ci/cd/</loc>
-  </url>
-  
-  <url>
-    <loc>https://pablodip.me/tags/</loc>
-  </url>
-  
 </urlset>

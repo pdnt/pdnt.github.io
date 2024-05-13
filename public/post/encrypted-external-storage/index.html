@@ -15,19 +15,6 @@
     
 
     
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-	ga('create', 'https:\/\/www.googletagmanager.com\/gtag\/js?id=G-36K52CH2JM', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-
 </head>
 <body>
         <div id="content" class="mx-auto"><header class="container mt-sm-5 mt-4 mb-4 mt-xs-1">
@@ -55,7 +42,7 @@ if (!doNotTrack) {
             </h2>
             <p class="text-muted mb-1">
                 
-                    System Administrator | DevOps and security enthusiast
+                    DevOps &amp; DevSecOps | Azure Certified x3 | Multi-cloud
                 
             </p>
             <ul id="nav-links" class="list-inline mb-2">
@@ -83,7 +70,7 @@ if (!doNotTrack) {
                     </li>
                 
                     <li class="list-inline-item mr-3">
-                        <a href="https://www.linkedin.com/in/pablo-dip-24b33b1b0/" target="_blank">
+                        <a href="https://www.linkedin.com/in/pablo-dip" target="_blank">
                             <i class="fab fa-linkedin-in fa-1x text-muted"></i>
                         </a>
                     </li>
@@ -112,8 +99,8 @@ if (!doNotTrack) {
 <p>After <a href="https://pablodip.me/post/encrypted-proxmox">setting up an encrypted Proxmox instance on my server</a>, I needed to protect my external storage. It wouldn&rsquo;t be very usefull to run my hypervisor over an encrypted LVM volume if I store all my backups and data on a open HDD.</p>
 <p>Today I will show you the very simple process of encrypting a drive to ensure the confidentiality and integrity of your data.</p>
 <p>To begin, let&rsquo;s find the drive we want to encrypt
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">lsblk</code></pre></div></p>
-<pre><code>NAME                  MAJ:MIN RM   SIZE RO TYPE  MOUNTPOINT
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>lsblk</span></span></code></pre></div></p>
+<pre tabindex="0"><code>NAME                  MAJ:MIN RM   SIZE RO TYPE  MOUNTPOINT
 sda                     8:0    0   1.8T  0 disk
 └─sda1                  8:1    0   1.8T  0 part
 sdb                     8:16   0 232.9G  0 disk
@@ -129,13 +116,13 @@ sdd                     8:48   0 931.5G  0 disk
 </code></pre><p>For this example, let&rsquo;s assume we will use <code>sdd</code>.
 Before encrypting the drive, I highly recommend performing a secure erase to overwrite the entire disk with random data. This step helps protect against potential file recovery.
 Ensure you have identified the correct drive on the previous step, as the following command will delete all of its contents.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo dd <span style="color:#66d9ef">if</span><span style="color:#f92672">=</span>/dev/zero of<span style="color:#f92672">=</span>/dev/sdd count<span style="color:#f92672">=</span><span style="color:#ae81ff">4096</span></code></pre></div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo dd <span style="color:#66d9ef">if</span><span style="color:#f92672">=</span>/dev/zero of<span style="color:#f92672">=</span>/dev/sdd count<span style="color:#f92672">=</span><span style="color:#ae81ff">4096</span></span></span></code></pre></div>
 <h3 id="encrypt-the-device">Encrypt the Device</h3>
 <p>The command <code>cryptsetup</code> is ussed to setup cryptographic volumes and the subcommand <code>luksFormat</code> initializes a LUKS partition and sets the initial key.
 The example below uses these commands to encrypt the <code>/dev/sdd</code> partition. Keep in mind that by executing this command you will lose all data on the partition that you are encrypting.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo cryptsetup luksFormat /dev/sdd</code></pre></div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo cryptsetup luksFormat /dev/sdd</span></span></code></pre></div>
 <p>You will be prompted with a warning message. Type &ldquo;YES&rdquo; in uppercase to confirm and proceed. Then, enter and verify your passphrase.</p>
-<pre><code>WARNING!
+<pre tabindex="0"><code>WARNING!
 ========
 This will overwrite data on /dev/sdd irrevocably.
 
@@ -143,14 +130,14 @@ Are you sure? (Type uppercase yes): YES
 Enter passphrase: 
 Verify passphrase:
 </code></pre><p>Create a logical device-mapper device, mounted to the LUKS-encrypted partition. In the example below, encryptedDrive is the given name of the mapping name for the opened LUKS partition.
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo cryptsetup open /dev/sdd encryptedDrive</code></pre></div></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo cryptsetup open /dev/sdd encryptedDrive</span></span></code></pre></div></p>
 <p>LUKS volumes are opened in <code>/dev/mapper</code>. We can see that our encrypted drive is listed:
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ls /dev/mapper</code></pre></div></p>
-<pre><code>control parrot--vg-root sda3_crypt encryptedDrive
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ls /dev/mapper</span></span></code></pre></div></p>
+<pre tabindex="0"><code>control parrot--vg-root sda3_crypt encryptedDrive
 </code></pre><p>Now, let&rsquo;s format the encrypted partition with the ext4 filesystem and assign the label encryptedDrive to it.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo mkfs.ext4 -L encryptedDrive /dev/mapper/encryptedDrive</code></pre></div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo mkfs.ext4 -L encryptedDrive /dev/mapper/encryptedDrive</span></span></code></pre></div>
 <p>Finally, we can mount the encrypted drive to directory. I will mount it to <code>/mnt/vaultDrive</code></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo mount /dev/mapper/encryptedDrive /mnt/vaultDrive</code></pre></div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo mount /dev/mapper/encryptedDrive /mnt/vaultDrive</span></span></code></pre></div>
 
         </article>
     </div>

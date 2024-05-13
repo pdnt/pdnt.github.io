@@ -15,19 +15,6 @@
     
 
     
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-	ga('create', 'https:\/\/www.googletagmanager.com\/gtag\/js?id=G-36K52CH2JM', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-
 </head>
 <body>
         <div id="content" class="mx-auto"><header class="container mt-sm-5 mt-4 mb-4 mt-xs-1">
@@ -55,7 +42,7 @@ if (!doNotTrack) {
             </h2>
             <p class="text-muted mb-1">
                 
-                    System Administrator | DevOps and security enthusiast
+                    DevOps &amp; DevSecOps | Azure Certified x3 | Multi-cloud
                 
             </p>
             <ul id="nav-links" class="list-inline mb-2">
@@ -83,7 +70,7 @@ if (!doNotTrack) {
                     </li>
                 
                     <li class="list-inline-item mr-3">
-                        <a href="https://www.linkedin.com/in/pablo-dip-24b33b1b0/" target="_blank">
+                        <a href="https://www.linkedin.com/in/pablo-dip" target="_blank">
                             <i class="fab fa-linkedin-in fa-1x text-muted"></i>
                         </a>
                     </li>
@@ -130,25 +117,25 @@ There is an unencrypted header at the beginning of an encrypted volume, which al
 Supplying the user password unlocks the decryption for the key material, which stores the master key. The master key in turn unlocks the bulk data</p>
 <p>Although you don&rsquo;t need to have a backup of your LUKS header to brute force your disk, I highly recommend that you create one while you still have access to the drive. If the header of a LUKS volume gets corrupted, you won&rsquo;t be able to access or decrypt your data unless you have a backup of your header. Keep in mind that you cannot backup the header of an encrypted LUKS drive without the passphrase because the contents of the header are encrypted using the passphrase and cannot be accessed without it. If you don&rsquo;t have a backup of your header, create one now!
 You can use cryptsetup to make a backup of your LUKS header:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo cryptsetup luksHeaderBackup /dev/sdb1 --header-backup-file luks_backup_sdb1</code></pre></div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo cryptsetup luksHeaderBackup /dev/sdb1 --header-backup-file luks_backup_sdb1</span></span></code></pre></div>
 <h3 id="bruteforcing-a-luks1-header">Bruteforcing a LUKS1 header</h3>
 <p>To access the bulk data we need the master key, and to recover it the user must supply a password. Then the password is processed for every active key slot. The recovery is successful when a master key candidate correctly checksums against the master key checksum stored in the phdr.</p>
 <p>First, I wrote a simple Python script to create a dictionary with all of the possible combinations.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python3" data-lang="python3"><span style="color:#f92672">import</span> itertools
-<span style="color:#f92672">import</span> string
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">passwordGenerator</span>():
-    characters <span style="color:#f92672">=</span> string<span style="color:#f92672">.</span>ascii_letters <span style="color:#f92672">+</span> string<span style="color:#f92672">.</span>digits <span style="color:#f92672">+</span> string<span style="color:#f92672">.</span>punctuation
-    incompletePassword <span style="color:#f92672">=</span> <span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;.BbV.$D]8ftauy~$(OgA&lt;BM63!ft@O46hj8yJ.9{en&#34;</span> <span style="color:#75715e">#Create a raw string so we can include the backslash character (\) as a literal character</span>
-
-    <span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#34;dictionary.txt&#34;</span>, <span style="color:#e6db74">&#34;w&#34;</span>) <span style="color:#66d9ef">as</span> dictionaryFile:
-        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> itertools<span style="color:#f92672">.</span>product(characters, repeat<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>):
-            combination <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span><span style="color:#f92672">.</span>join(i) <span style="color:#75715e">#Convert the output of itertools to a string</span>
-            dictionaryFile<span style="color:#f92672">.</span>write(incompletePassword <span style="color:#f92672">+</span> combination <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>)
-
-passwordGenerator()</code></pre></div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python3" data-lang="python3"><span style="display:flex;"><span><span style="color:#f92672">import</span> itertools
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> string
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">passwordGenerator</span>():
+</span></span><span style="display:flex;"><span>    characters <span style="color:#f92672">=</span> string<span style="color:#f92672">.</span>ascii_letters <span style="color:#f92672">+</span> string<span style="color:#f92672">.</span>digits <span style="color:#f92672">+</span> string<span style="color:#f92672">.</span>punctuation
+</span></span><span style="display:flex;"><span>    incompletePassword <span style="color:#f92672">=</span> <span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;.BbV.$D]8ftauy~$(OgA&lt;BM63!ft@O46hj8yJ.9{en&#34;</span> <span style="color:#75715e">#Create a raw string so we can include the backslash character (\) as a literal character</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#34;dictionary.txt&#34;</span>, <span style="color:#e6db74">&#34;w&#34;</span>) <span style="color:#66d9ef">as</span> dictionaryFile:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> itertools<span style="color:#f92672">.</span>product(characters, repeat<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>):
+</span></span><span style="display:flex;"><span>            combination <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span><span style="color:#f92672">.</span>join(i) <span style="color:#75715e">#Convert the output of itertools to a string</span>
+</span></span><span style="display:flex;"><span>            dictionaryFile<span style="color:#f92672">.</span>write(incompletePassword <span style="color:#f92672">+</span> combination <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>passwordGenerator()</span></span></code></pre></div>
 <p>To bruteforce the header we can use a tool like bruteforce-luks.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">bruteforce-luks -t <span style="color:#ae81ff">8</span> -v <span style="color:#ae81ff">60</span> -f dictionary.txt /dev/sdd1</code></pre></div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>bruteforce-luks -t <span style="color:#ae81ff">8</span> -v <span style="color:#ae81ff">60</span> -f dictionary.txt /dev/sdd1</span></span></code></pre></div>
 <p><strong>-t</strong> CPU threads to be used</p>
 <p><strong>-v</strong> Print progress information every x seconds</p>
 <p><strong>-f</strong>  path to the diccionary</p>
