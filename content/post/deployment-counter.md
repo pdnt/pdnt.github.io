@@ -205,6 +205,6 @@ This number is updated automatically with every successful deployment.
 
 This practical implementation underscores the potency of controlled workflows, code management, continuous integration and continuous delivery.
 
-You can also see the counter implemented on [my home page](https://pablodip.me/)
+You can also see the counter implemented on [my home page](https://dippablo.com/)
 
 &nbsp;

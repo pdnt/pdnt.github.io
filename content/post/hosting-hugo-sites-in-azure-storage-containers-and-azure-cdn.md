@@ -3,7 +3,7 @@ title: "From Static to Stellar: Hosting Hugo sites in Azure Storage containers &
 date: 2023-08-17T15:23:30-03:00
 categories: [ "DevOps", "Azure"]
 ---
-After publishing my article "[Integrating a deployment counter to your CI/CD pipeline](https://pablodip.me/post/deployment-counter/)", my static website recibed about 1.3k visits, not alot but it was enough to notice some performance issues.
+After publishing my article "[Integrating a deployment counter to your CI/CD pipeline](https://dippablo.com/post/deployment-counter/)", my static website recibed about 1.3k visits, not alot but it was enough to notice some performance issues.
 
 To address this, I decided to transition from Azure Static Web Apps to a better setup using Azure Storage Containers and Azure Content Delivery Network (CDN).
 

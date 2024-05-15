@@ -175,5 +175,5 @@ If you didn't install Proxmox VE as dual boot beside another OS, you can safely 
 apt remove os-prober
 {{< /highlight >}}
 
-And now you have an encrypted proxmox server. If you use external storage with your proxmox server, you may also be interested in [encrypting it to ensure the confidentiality and integrity of your data.](https://pablodip.me/post/encrypted-external-storage/)
+And now you have an encrypted proxmox server. If you use external storage with your proxmox server, you may also be interested in [encrypting it to ensure the confidentiality and integrity of your data.](https://dippablo.com/post/encrypted-external-storage/)
 

@@ -4,7 +4,7 @@ date: 2023-09-01T11:11:00-03:00
 categories: [ "DevOps", "Azure" ]
 ---
 
-Following up the theme of my previous article [From Static to Stellar: Hosting Hugo sites in Azure Storage containers & Azure CDN](https://pablodip.me/post/hosting-hugo-sites-in-azure-storage-containers-and-azure-cdn/), I will show you how to map a root domain to an Azure CDN endpoint.
+Following up the theme of my previous article [From Static to Stellar: Hosting Hugo sites in Azure Storage containers & Azure CDN](https://dippablo.com/post/hosting-hugo-sites-in-azure-storage-containers-and-azure-cdn/), I will show you how to map a root domain to an Azure CDN endpoint.
 
 At the time of this writing, Azure doesn't support root domains using Azure CDN Managed certificates. The Azure documentation gives us two options to map the root domain, you can use your own certificate (stored in Azure Key vault) or you can purchase a new certificate through Key vault.
 

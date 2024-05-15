@@ -5,7 +5,7 @@ categories: ["Cryptography", "Cybersecurity"]
 ---
 Protecting sensitive information from unauthorized access and potential breaches is crucial, especially when it comes to external storage devices like USB drives, which are susceptible to loss or theft.
 
-After [setting up an encrypted Proxmox instance on my server](https://pablodip.me/post/encrypted-proxmox), I needed to protect my external storage. It wouldn't be very usefull to run my hypervisor over an encrypted LVM volume if I store all my backups and data on a open HDD.
+After [setting up an encrypted Proxmox instance on my server](https://dippablo.com/post/encrypted-proxmox), I needed to protect my external storage. It wouldn't be very usefull to run my hypervisor over an encrypted LVM volume if I store all my backups and data on a open HDD.
 
 Today I will show you the very simple process of encrypting a drive to ensure the confidentiality and integrity of your data. 
 
