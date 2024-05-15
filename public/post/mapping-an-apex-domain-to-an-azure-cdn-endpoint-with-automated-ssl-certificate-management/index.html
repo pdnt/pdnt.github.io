@@ -95,7 +95,7 @@
         </div>
 
         <article>
-            <p>Following up the theme of my previous article <a href="https://pablodip.me/post/hosting-hugo-sites-in-azure-storage-containers-and-azure-cdn/">From Static to Stellar: Hosting Hugo sites in Azure Storage containers &amp; Azure CDN</a>, I will show you how to map a root domain to an Azure CDN endpoint.</p>
+            <p>Following up the theme of my previous article <a href="https://dippablo.com/post/hosting-hugo-sites-in-azure-storage-containers-and-azure-cdn/">From Static to Stellar: Hosting Hugo sites in Azure Storage containers &amp; Azure CDN</a>, I will show you how to map a root domain to an Azure CDN endpoint.</p>
 <p>At the time of this writing, Azure doesn&rsquo;t support root domains using Azure CDN Managed certificates. The Azure documentation gives us two options to map the root domain, you can use your own certificate (stored in Azure Key vault) or you can purchase a new certificate through Key vault.</p>
 <p>Today, I will show you how to automate the creation, signing and the renewal of free SSL certificates from Let’s encrypt while storing them in your Azure KeyVault. To acomplish this, I will be implementing the <a href="https://github.com/shibayan/keyvault-acmebot">Key Vault Acmebot</a>.</p>
 <h4 id="what-is-acme">What is ACME?</h4>
