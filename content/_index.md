@@ -3,15 +3,14 @@ date: 2023-06-04T17:13:57-03:00
 draft: false
 ---
 
-### About
+### About :wave:
 
-Hello :wave: I'm Pablo Dip. I live in Tucuman, Argentina.
 
-I'm a dedicated professional in the tech industry. I began my career as a technician in a computer store, where I cultivated a profound understanding of hardware and software components.
+With over 5 years of hands-on experience in IT services, cloud technologies, and automation, I am passionate about crafting robust and secure infrastructures that drive business success. My expertise lies in harnessing the power of AWS and Azure to deliver scalable solutions while integrating best practices in DevSecOps.
 
-I established my own business, focusing on selling enterprise networking equipment and providing reliable networking solutions. Client satisfaction has always been my priority, and I take pride in tailoring solutions to meet individual needs.
+I stand out through my proven track record of collaborating with teams to deliver reliable and secure infrastructures. Certified in Azure, I bring a wealth of knowledge in automation with Ansible and Python, enabling streamlined processes and enhanced productivity. My dedication to staying updated with the latest technologies ensures that I can adapt quickly to new environments and tools, making me a valuable asset in dynamic IT landscapes.
 
-My journey is characterized by continuous growth and a commitment to staying updated with the latest trends in the tech world. I firmly believe in sharing knowledge and empowering others, which is why I have volunteered for several years to security conferences such as [Wild West Hacking Fest](https://wildwesthackinfest.com/) (from [Black Hills Information Security](https://www.blackhillsinfosec.com/)) and [CactusCon](https://www.cactuscon.com/).
+I firmly believe in sharing knowledge and empowering others, which is why I have volunteered for several years to security conferences such as [Wild West Hacking Fest](https://wildwesthackinfest.com/) (from [Black Hills Information Security](https://www.blackhillsinfosec.com/)) and [CactusCon](https://www.cactuscon.com/).
 
 ### Contact
 
